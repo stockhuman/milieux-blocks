@@ -7,7 +7,11 @@ import pickBy from 'lodash/pickBy';
 import moment from 'moment';
 import classnames from 'classnames';
 
-import PostSelect from './select-post.js'
+// import PostSelect from './select-post.js'
+/* eslint-disable no-undef */
+// imported as a dependency from https://github.com/humanmade/hm-gutenberg-tools/
+const { PostSelectButton } = hm.components;
+/* eslint-enable no-undef */
 
 const { Component, Fragment } = wp.element;
 
@@ -28,6 +32,7 @@ const {
 	Spinner,
 	ToggleControl,
 	Toolbar,
+	BaseControl,
 } = wp.components;
 
 const {
@@ -94,7 +99,11 @@ class LatestPostsBlock extends Component {
 
 	render() {
 		const { attributes, categoriesList, setAttributes, latestPosts } = this.props;
-		const { displayPostDate, displayPostExcerpt, displayPostAuthor, displayPostImage, displayPostLink, align, postLayout, columns, order, orderBy, categories, postsToShow, imageCrop, displayFeaturedPost } = attributes;
+		const { align, postLayout, columns, order, orderBy, categories, postsToShow, imageCrop, featuredPost } = attributes;
+
+		const { displayFeaturedPost, displayPostImage, displayPostLink, displayPostDate, displayPostExcerpt, displayPostAuthor } = attributes
+
+		console.log(attributes)
 
 		// Thumbnail options
 		const imageCropOptions = [
@@ -104,17 +113,44 @@ class LatestPostsBlock extends Component {
 
 		const inspectorControls = (
 			<InspectorControls>
-				<PanelBody title={ __( 'Post Grid Settings' ) }>
+				<PanelBody title={ __( 'Featured Feature' ) }>
 					<ToggleControl
-						label={ __( 'Show Featured Post' ) }
-						checked={ displayFeaturedPost }
-						onChange={ this.toggleDisplayFeaturedPost }
+						label={__('Show Featured Post')}
+						checked={displayFeaturedPost}
+						onChange={this.toggleDisplayFeaturedPost}
 					/>
-					{ displayFeaturedPost &&
-						<div><PostSelect></PostSelect></div>
-						// select post goes here
-
+					{displayFeaturedPost &&
+					<BaseControl
+						id="post-select-btn"
+						label="Select or update the featured post">
+						<PostSelectButton
+							value={featuredPost ? featuredPost.id : undefined}
+							onSelect={ posts => {
+								setAttributes({
+									featuredPost: {
+										id: Number(posts[ 0 ].id),
+										type: 'object',
+										data: posts[ 0 ],
+									},
+								})
+							}}
+							postType="feature"
+							btnProps={{ isLarge: true }}
+						>
+							{__('Select Featured Post')}
+						</PostSelectButton>
+					</BaseControl>
 					}
+					{((featuredPost !== undefined) && displayFeaturedPost) &&
+						<div className="mlx-featured-post-title">
+							<span>{__('Currently Selected:')}</span>
+							<hr />
+							<h2>{decodeEntities(featuredPost.data.title.rendered)}</h2>
+						</div>
+					}
+
+				</PanelBody>
+				<PanelBody title={ __( 'Post Grid Settings' ) }>
 					<QueryControls
 						{ ...{ order, orderBy } }
 						numberOfItems={ postsToShow }
@@ -237,6 +273,14 @@ class LatestPostsBlock extends Component {
 							'mlx-features__items': 'mlx-features__items',
 						} ) }
 					>
+						{((featuredPost !== undefined) && displayFeaturedPost) &&
+							<div className="mlx-featured-feature">
+								<img
+									src={featuredPost.data.mlx_featured_image.source_url}
+									alt={decodeEntities(featuredPost.data.title.rendered.trim()) || __('(Untitled)')}
+								/>
+							</div>
+						}
 						{ displayPosts.map( ( post, i ) =>
 							<article
 								hasImage={ post.mlx_featured_image !== null ? true : false }
@@ -308,7 +352,7 @@ export default withSelect( ( select, props ) => {
 		per_page: postsToShow,
 	}, ( value ) => ! isUndefined( value ) );
 	const categoriesListQuery = {
-		per_page: 100,
+		per_page: 40,
 	};
 	return {
 		latestPosts: getEntityRecords( 'postType', 'feature', latestPostsQuery ), // this is where the magic happened

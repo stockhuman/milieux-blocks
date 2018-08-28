@@ -37,6 +37,47 @@ registerBlockType( 'milieux-blocks/features', {
 		__( 'milieux' ),
 	],
 
+	attributes: {
+		featuredPost: {
+			type: 'object',
+		},
+		displayFeaturedPost: {
+			type: 'boolean',
+			default: false,
+		},
+		postsToShow: {
+			type: 'int',
+			default: 10,
+		},
+		displayPostImage: {
+			type: 'boolean',
+			default: false,
+		},
+		displayPostLink: {
+			type: 'boolean',
+			default: false,
+		},
+		displayPostDate: {
+			type: 'boolean',
+			default: false,
+		},
+		displayPostExcerpt: {
+			type: 'boolean',
+			default: false,
+		},
+		displayPostAuthor: {
+			type: 'boolean',
+			default: false,
+		},
+		categories: {
+			type: 'int',
+		},
+		order: {
+			type: 'string',
+			default: 'asc',
+		},
+	},
+
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
 		if ( -1 !== validAlignments.indexOf( align ) ) {

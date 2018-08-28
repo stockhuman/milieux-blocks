@@ -13,3 +13,6 @@
  *
  * Via the _variables file in the main milieux theme
 */
+.post-list-item:hover {
+  background: #d6dbe0;
+  cursor: pointer; }

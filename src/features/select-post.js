@@ -11,7 +11,11 @@ const {} = wp.editor
 
 // const { withState } = wp.compose
 const { withSelect } = wp.data
+
+/* eslint-disable no-undef */
+// imported as a dependency from https://github.com/humanmade/hm-gutenberg-tools/
 const { PostSelectButton } = hm.components;
+/* eslint-enable no-undef */
 
 // const PostSelectInput = withState({
 // 	query: '',
@@ -33,28 +37,28 @@ class PostSelectBlock extends Component {
 	constructor() {
 		super(...arguments)
 
-		this.searchForFeaturedPost = this.searchForFeaturedPost.bind( this );
-		this.state = {doot: true}
-		console.log(this);
-
+		this.setFeaturedPost = this.setFeaturedPost.bind( this );
+		this.state = {featuredPost: null}
 	}
 
-	searchForFeaturedPost() {
-		console.log(this.searchQuery);
+	setFeaturedPost(id) {
+		console.log(id);
+		const { setAttributes } = this.props
+		setAttributes({ featuredPost : id })
 	}
 
 	render() {
 		const { postq, setAttributes } = this.props
-		console.log(this)
 
 		const inspectorControls = (
 			<Fragment>
 				<PostSelectButton
 					onSelect={posts => setAttributes({ postIds: posts.map(p => p.id) })}
 					postType="feature"
+					maxPosts={3}
 					btnProps={{ isLarge: true }}
 				>
-					{__('Select Featured Post')}
+					{__('Search all features')}
 				</PostSelectButton>
 			</Fragment>
 		);
@@ -78,7 +82,12 @@ class PostSelectBlock extends Component {
 			<Fragment>
 				{ inspectorControls }
 				{displayPosts.map( (post, i ) =>
-					<h2 key={i} >{decodeEntities(post.title.rendered)}</h2>
+					<button key={i}
+						onClick={this.setFeaturedPost(i)}
+						onKeyDown={this.setFeaturedPost(i)}
+					>
+						{decodeEntities(post.title.rendered)}
+					</button>
 				)}
 			</Fragment>
 		)
