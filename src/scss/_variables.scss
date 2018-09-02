@@ -1,0 +1,158 @@
+  // Structure Variables
+$u: 1rem; // size unit
+
+// NAVIGATION
+$nav-height--mobile: 50px;
+
+// Usage: "z-index: map-get($z-index, 'nav');"
+// or z(index), z(index, expression)
+$z-index:(
+	'base'   : 0,
+	'one'    : 10,
+	'two'    : 20,
+	'three'  : 30,
+	'nav'    : 30,
+	'four'   : 40,
+	'five'   : 60,
+	'super'  : 70
+);
+
+// Brand colors
+$color-brand:         #0090FC;
+$color-secondary: 		#f9a825;
+$color-tertiary:			#3b5998;
+$color-accent:        #ffffff;
+
+$white:               #FFFFFF;
+$black:               #000000;
+$off-black:						#1A1A1A;
+
+$gray-darker:         #151515;
+$gray-dark:           #6c767f;
+$gray:                #AFAFAF;
+$gray-light:          #F0F0F0;
+$gray-lighter:        #F8F8F8;
+
+// UI Associations
+$color-border:	      $gray-light;
+$color-link: 	        $color-brand;
+$color-nav-bg:				$off-black;
+
+$color-font--base: 		#222;
+
+// social colors
+$color-twitter:  #00aced;
+$color-facebook: #3b5998;
+
+
+// Typography
+$font-stack: 					 'Source Sans Pro','system';
+$font-sans-serif:      'Source Sans Pro', sans-serif;
+$font-sans-serif-bold: 'Roboto', sans-serif;
+$font-heading:				 'Roboto', sans-serif;
+$font-number:					 'Roboto', sans-serif;
+$font-mono:            'IBM Plex Mono', monospace;
+
+$font-w-ultra-light: 200;
+$font-w-light: 300;
+$font-w-normal: 400;
+$font-w-medium: 500;
+$font-w-bold: 700;
+$font-w-extra-bold: 900;
+
+$font-s-base: 16;
+$font-s-large: 18;
+$font-s-small: 11;
+
+$font-s-number: 45;
+
+$font-s-h1: 36;
+$font-s-h1-medium: 34;
+$font-s-h2: 24;
+$font-s-h3: 20;
+$font-s-h4: 18;
+$font-s-h5: 14;
+$font-s-h6: 12;
+
+// Easing
+$linear:         cubic-bezier(0.250, 0.250, 0.750, 0.750);
+$easeInQuad:     cubic-bezier(0.550, 0.085, 0.680, 0.530);
+$easeInCubic:    cubic-bezier(0.550, 0.055, 0.675, 0.190);
+$easeInQuart:    cubic-bezier(0.895, 0.030, 0.685, 0.220);
+$easeInQuint:    cubic-bezier(0.755, 0.050, 0.855, 0.060);
+$easeInSine:     cubic-bezier(0.470, 0.000, 0.745, 0.715);
+$easeInExpo:     cubic-bezier(0.950, 0.050, 0.795, 0.035);
+$easeInCirc:     cubic-bezier(0.600, 0.040, 0.980, 0.335);
+$easeInBack:     cubic-bezier(0.600, 0, 0.735, 0.045);
+
+$easeOutQuad:    cubic-bezier(0.250, 0.460, 0.450, 0.940);
+$easeOutCubic:   cubic-bezier(0.215, 0.610, 0.355, 1.000);
+$easeOutQuart:   cubic-bezier(0.165, 0.840, 0.440, 1.000);
+$easeOutQuint:   cubic-bezier(0.230, 1.000, 0.320, 1.000);
+$easeOutSine:    cubic-bezier(0.390, 0.575, 0.565, 1.000);
+$easeOutExpo:    cubic-bezier(0.190, 1.000, 0.220, 1.000);
+$easeOutCirc:    cubic-bezier(0.075, 0.820, 0.165, 1.000);
+$easeOutBack:    cubic-bezier(0.175, 0.885, 0.320, 1);
+
+$easeInOutQuad:  cubic-bezier(0.455, 0.030, 0.515, 0.955);
+$easeInOutCubic: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+$easeInOutQuart: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+$easeInOutQuint: cubic-bezier(0.860, 0.000, 0.070, 1.000);
+$easeInOutSine:  cubic-bezier(0.445, 0.050, 0.550, 0.950);
+$easeInOutExpo:  cubic-bezier(1.000, 0.000, 0.000, 1.000);
+$easeInOutCirc:  cubic-bezier(0.785, 0.135, 0.150, 0.860);
+$easeInOutBack:  cubic-bezier(0.680, 0, 0.265, 1);
+
+// Grid Variables
+$breakpoints: (
+	'phone': 			320px,
+	'phablet': 		550px,
+	'tablet': 		768px,
+	'desktop': 		1024px,
+	'ultrawide': 	1400px
+);
+
+@function m($key) {
+	@return map-get($breakpoints, $key)
+}
+
+$grid-breakpoints:
+	xs m('phone')   m('phablet'),
+  sm m('phablet') m('tablet'),
+  md m('tablet')  m('desktop'),
+  lg m('desktop') m('ultrawide') !default;
+
+$grid-gutter-width: $u;
+$grid-outer-margin: $u * 2;
+
+$container-width: m('ultrawide') !default;
+$container-width-larger-than-mobile: 85% !default;
+$container-width-larger-than-phablet: 80% !default;
+$total-columns: 12 !default;
+$column-width: 100 / $total-columns !default;
+$column-margin: 4% !default;
+
+// Misc
+$global-radius: 4px !default;
+
+// Media Queries
+$media-expressions: (
+	'screen': 'screen',
+	'print': 'print',
+	'handheld': 'handheld',
+	'landscape': '(orientation: landscape)',
+	'portrait': '(orientation: portrait)',
+	'retina2x': '(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)',
+	'retina3x': '(-webkit-min-device-pixel-ratio: 3), (min-resolution: 350dpi)'
+) !default;
+
+
+$unit-intervals: (
+	'px': 1,
+	'em': 0.01,
+	'rem': 0.1
+);
+
+$im-media-support: true !default;
+$im-no-media-breakpoint: 'desktop' !default;
+$im-no-media-expressions: ('screen', 'portrait', 'landscape') !default;

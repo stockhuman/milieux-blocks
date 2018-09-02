@@ -1,0 +1,46 @@
+@function grid-column-width($n) {
+	@return $column-width * $n - ($column-margin*($total-columns - $n)/$total-columns);
+}
+
+@function grid-offset-length($n) {
+	@return grid-column-width($n) + $column-margin;
+}
+
+/**
+ * Returns a specified z-index
+ * @param  {[type]} $index [description]
+ * @param  {[type]} $mod:  null          [description]
+ * @return {int}        [description]
+ */
+@function z ( $index, $mod: null ) {
+	$out: 0;
+	@if (map-has-key($z-index, $index)) {
+		$out: map-get($z-index, $index)
+	}
+	@else {
+		@if type-of($index) != 'number' {
+			@warn 'Argument passed to z() is not a number';
+			@return $out;
+		}
+		@else {
+			$out: unitless($index);
+		}
+	}
+
+	@if ($mod != null) {
+		$out: $out + $mod;
+		@return $out;
+	}
+	@else {
+		@return $out;
+	}
+}
+
+/**
+ * The unit function
+ * @param  {int} $multiplier: 1  int or string with math
+ * @return {CSS unit}            $u global, multiplied by argument
+ */
+@function u( $multiplier: 1 ) {
+	@return $u * $multiplier;
+}

@@ -6,7 +6,7 @@ const { __ } = wp.i18n
 const { Component, Fragment } = wp.element
 const { decodeEntities } = wp.htmlEntities
 
-const { Placeholder, Spinner/*, TextControl */ } = wp.components
+const { Placeholder, Spinner } = wp.components
 const {} = wp.editor
 
 // const { withState } = wp.compose
@@ -16,22 +16,6 @@ const { withSelect } = wp.data
 // imported as a dependency from https://github.com/humanmade/hm-gutenberg-tools/
 const { PostSelectButton } = hm.components;
 /* eslint-enable no-undef */
-
-// const PostSelectInput = withState({
-// 	query: '',
-// 	results: [],
-// })(({ query, setState }) => (
-// 	<TextControl
-// 		label={__('Search Featured Post')}
-// 		value={query}
-// 		placeholder={ __('Post Name') }
-// 		onChange={ (newQueryString) => {
-// 			setState({ query: newQueryString })
-// 			levenshtein(newQueryString, 'toast')
-
-// 		}}
-// 	/>
-// ) );
 
 class PostSelectBlock extends Component {
 	constructor() {

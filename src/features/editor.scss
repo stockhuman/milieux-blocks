@@ -1,5 +1,39 @@
-// .post-list-item:hover {
-// 	background: #d6dbe0;
-// 	cursor: pointer;
-// }
+@import '../common.scss';
 
+// setup
+.wp-block-milieux-blocks-features {
+	width: 100%;
+	background: #f7f9fe;
+}
+
+[data-type="milieux-blocks/features"] {
+	max-width: 100% !important;
+}
+
+// utility
+.t-up {
+	text-transform: uppercase;
+}
+
+.section-title {
+	font-weight: $font-w-bold;
+	font-family: $font-sans-serif;
+	text-transform: uppercase;
+	padding: 2 * $u;
+}
+
+// main
+.mlx-features {
+	@at-root #{&}__items {
+		color: red;
+	}
+}
+
+.mlx-featured-feature {
+
+}
+
+.post-list-item:hover {
+	background: #f7f7f7;
+	cursor: pointer;
+}

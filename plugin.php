@@ -17,6 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+defined( 'MLX_BLOCKS_DIR' ) OR define( 'MLX_BLOCKS_DIR', plugin_dir_path( __FILE__ ) );
+defined( 'MLX_BLOCKS_URL' ) OR define( 'MLX_BLOCKS_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * Initialize the blocks
@@ -71,11 +73,13 @@ function milieux_blocks_loader() {
 			'',//filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ),
 			true // Enqueue the script in the footer.
 		);
-
-		wp_enqueue_style( 'milieux-blocks-editor',
-			plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
-			array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
+		$now = new DateTime();
+		wp_enqueue_style(
+			'milieux-blocks-editor',
+			MLX_BLOCKS_URL . 'dist/blocks.editor.build.css',
+			[],
 			// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' )
+			$now->getTimestamp()
 		);
 	}
 	add_action( 'enqueue_block_editor_assets', 'milieux_editor_assets' );

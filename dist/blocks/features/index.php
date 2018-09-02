@@ -13,7 +13,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 	$recent_posts = wp_get_recent_posts( array(
 		'numberposts' => $attributes['postsToShow'],
 		'post_status' => 'publish',
-		'post_type' => 'event',
+		'post_type' => 'feature',
 		'order' => $attributes['order'],
 		'orderby' => $attributes['orderBy'],
 		'category' => $attributes['categories'],
@@ -21,7 +21,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 
 	$list_items_markup = '';
 
-//	if (is_array($recent_posts)) {
+if (is_array($recent_posts)) {
 
 		foreach ( $recent_posts as $post ) {
 			// Get the post ID
@@ -144,7 +144,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 			// Close the markup for the post
 			$list_items_markup .= "</article>\n";
 		}
-	// }
+	}
 
 	// Build the classes
 	$class = "ab-block-post-grid align{$attributes['align']}";
@@ -186,7 +186,7 @@ function milieux_blocks_register_block_core_latest_posts() {
 		return;
 	}
 
-	register_block_type( 'milieux-blocks/ab-post-grid', array(
+	register_block_type( 'milieux-blocks/features', array(
 		'attributes' => array(
 			'categories' => array(
 				'type' => 'string',
@@ -246,6 +246,14 @@ function milieux_blocks_register_block_core_latest_posts() {
 				'type' => 'string',
 				'default' => 'landscape',
 			),
+			'featuredPost' => array(
+				'type' => 'number',
+				'default' => 0,
+			),
+			'displayFeaturedPost' => array(
+				'type' => 'boolean',
+				'default' => false,
+			)
 		),
 		'render_callback' => 'milieux_blocks_render_block_core_latest_posts',
 	) );
@@ -260,7 +268,7 @@ add_action( 'init', 'milieux_blocks_register_block_core_latest_posts' );
 function milieux_blocks_register_rest_fields() {
 	// Add landscape featured image source
 	register_rest_field(
-		'post',
+		'feature',
 		'featured_image_src',
 		array(
 			'get_callback' => 'milieux_blocks_get_image_src_landscape',
@@ -271,7 +279,7 @@ function milieux_blocks_register_rest_fields() {
 
 	// Add square featured image source
 	register_rest_field(
-		'post',
+		'feature',
 		'featured_image_src_square',
 		array(
 			'get_callback' => 'milieux_blocks_get_image_src_square',
@@ -282,7 +290,7 @@ function milieux_blocks_register_rest_fields() {
 
 	// Add author info
 	register_rest_field(
-		'post',
+		'feature',
 		'author_info',
 		array(
 			'get_callback' => 'milieux_blocks_get_author_info',

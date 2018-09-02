@@ -273,12 +273,17 @@ class LatestPostsBlock extends Component {
 							'mlx-features__items': 'mlx-features__items',
 						} ) }
 					>
+						<h2 className="section-title t-up">{ __('Features') }</h2>
 						{((featuredPost !== undefined) && displayFeaturedPost) &&
 							<div className="mlx-featured-feature">
 								<img
 									src={featuredPost.data.mlx_featured_image.source_url}
 									alt={decodeEntities(featuredPost.data.title.rendered.trim()) || __('(Untitled)')}
 								/>
+								<div className="mlx-featured-feature__meta">
+									<h1 className="ff__title">{decodeEntities(featuredPost.data.title.rendered)}</h1>
+									<p className="ff__byline">{ __('by') + featuredPost.data.status }</p>
+								</div>
 							</div>
 						}
 						{ displayPosts.map( ( post, i ) =>
