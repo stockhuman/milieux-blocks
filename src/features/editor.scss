@@ -25,7 +25,13 @@
 // main
 .mlx-features {
 	@at-root #{&}__items {
-		color: red;
+		.entry-title a {
+			color: #555;
+			font-family: $font-sans-serif;
+			padding: 10px;
+			padding-left: 2 * $u;
+			text-decoration: none;
+		}
 	}
 }
 

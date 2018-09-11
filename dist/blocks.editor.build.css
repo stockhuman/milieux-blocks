@@ -132,8 +132,12 @@
   text-transform: uppercase;
   padding: 2rem; }
 
-.mlx-features__items {
-  color: red; }
+.mlx-features__items .entry-title a {
+  color: #555;
+  font-family: "Source Sans Pro", sans-serif;
+  padding: 10px;
+  padding-left: 2rem;
+  text-decoration: none; }
 
 .post-list-item:hover {
   background: #f7f7f7;
