@@ -69,7 +69,7 @@ function milieux_blocks_loader() {
 	function milieux_editor_assets() {
 		wp_enqueue_script( 'milieux-blocks',
 			plugins_url() . '/milieux-blocks/dist/blocks.build.js' ,
-			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'hm-gb-tools-editor' ),
+			array( 'wp-blocks', 'wp-i18n', 'wp-element' ),
 			'',//filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ),
 			true // Enqueue the script in the footer.
 		);

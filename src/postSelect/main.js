@@ -1,43 +1,10 @@
-// const { __ } = wp.i18n
-// const { registerBlockType } = wp.blocks
-// import edit from './edit';
+/**
+ * Forked from @vermiliondesign's Gutenberg PostSelector
+ * @link https://github.com/vermiliondesign/gutenberg-post-selector
+ */
 
-// registerBlockType( 'milieux-blocks/post-select', {
-// 	title: __('Post Select'), // Block title.
-// 	description: 'Showcase a featured post, event or similar with an eye-catching banner',
-// 	icon: 'shield',
-// 	category: 'milieux-blocks',
-// 	keywords: [
-// 		__('Hero'),
-// 		__('Milieux'),
-// 		__('guten-block'),
-// 	],
-// 	attributes: {
-// 		content: {
-// 			type: 'array',
-// 			source: 'children',
-// 			selector: 'p',
-// 		},
-// 		title: {
-// 			type: 'string',
-// 			selector: 'h2',
-// 		},
-// 		link: {
-// 			type: 'string',
-// 			selector: 'a',
-// 		},
-// 		selectedPost: {
-// 			type: 'number',
-// 			default: 0,
-// 		},
-// 	},
-
-// 	edit,
-
-// 	save: () => {
-// 		return null
-// 	},
-// })
+// Styles
+import './editor.scss'
 
 import PostSelector from './PostSelector'
 

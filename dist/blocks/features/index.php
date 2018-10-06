@@ -247,7 +247,7 @@ function milieux_blocks_register_block_core_latest_posts() {
 				'default' => 'landscape',
 			),
 			'featuredPost' => array(
-				'type' => 'number',
+				'type' => 'object',
 				'default' => 0,
 			),
 			'displayFeaturedPost' => array(
@@ -291,7 +291,7 @@ function milieux_blocks_register_rest_fields() {
 	// Add author info
 	register_rest_field(
 		'feature',
-		'author_info',
+		'author',
 		array(
 			'get_callback' => 'milieux_blocks_get_author_info',
 			'update_callback' => null,
@@ -330,12 +330,15 @@ function milieux_blocks_get_image_src_square( $object, $field_name, $request ) {
  * Get author info for the rest field
  */
 function milieux_blocks_get_author_info( $object, $field_name, $request ) {
-	// Get the author name
-	$author_data['display_name'] = get_the_author_meta( 'display_name', $object['author'] );
+	$post_author = (int) $object['author'];
 
-	// Get the author link
-	$author_data['author_link'] = get_author_posts_url( $object['author'] );
+	$array_data = array();
+	// $array_data['login'] = get_the_author_meta('login');
+	// $array_data['email'] = get_the_author_meta('email');
+	$array_data['user_nicename'] = get_the_author_meta('user_nicename');
+	$array_data['first_name'] = get_user_meta($post_author, 'first_name', true);
+	$array_data['last_name'] = get_user_meta($post_author, 'last_name', true);
+	$array_data['nickname'] = get_user_meta($post_author, 'nickname', true);
 
-	// Return the author data
-	return $author_data;
+	return array_filter($array_data);
 }

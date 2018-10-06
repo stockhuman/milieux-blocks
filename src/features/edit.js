@@ -7,21 +7,12 @@ import pickBy from 'lodash/pickBy';
 import moment from 'moment';
 import classnames from 'classnames';
 
-// import PostSelect from './select-post.js'
-/* eslint-disable no-undef */
-// imported as a dependency from https://github.com/humanmade/hm-gutenberg-tools/
-const { PostSelectButton } = hm.components;
-/* eslint-enable no-undef */
+import PostSelector from './select-post.js'
 
 const { Component, Fragment } = wp.element;
-
 const { __ } = wp.i18n;
-
 const { decodeEntities } = wp.htmlEntities;
-
-const {
-	withSelect,
-} = wp.data;
+const { withSelect } = wp.data;
 
 const {
 	PanelBody,
@@ -99,11 +90,24 @@ class LatestPostsBlock extends Component {
 
 	render() {
 		const { attributes, categoriesList, setAttributes, latestPosts } = this.props;
-		const { align, postLayout, columns, order, orderBy, categories, postsToShow, imageCrop, featuredPost } = attributes;
 
-		const { displayFeaturedPost, displayPostImage, displayPostLink, displayPostDate, displayPostExcerpt, displayPostAuthor } = attributes
-
-		console.log(attributes)
+		const {
+			align,
+			categories,
+			columns,
+			displayFeaturedPost,
+			displayPostAuthor,
+			displayPostDate,
+			displayPostExcerpt,
+			displayPostImage,
+			displayPostLink,
+			featuredPost,
+			imageCrop,
+			order,
+			orderBy,
+			postLayout,
+			postsToShow,
+		} = attributes;
 
 		// Thumbnail options
 		const imageCropOptions = [
@@ -123,29 +127,26 @@ class LatestPostsBlock extends Component {
 					<BaseControl
 						id="post-select-btn"
 						label="Select or update the featured post">
-						<PostSelectButton
-							value={featuredPost ? featuredPost.id : undefined}
-							onSelect={ posts => {
+						<PostSelector
+							posts={[]}
+							onPostSelect={post => {
 								setAttributes({
-									featuredPost: {
-										id: Number(posts[ 0 ].id),
-										type: 'object',
-										data: posts[ 0 ],
-									},
+									featuredPost: post,
+									fp: JSON.stringify(post),
 								})
 							}}
-							postType="feature"
-							btnProps={{ isLarge: true }}
-						>
-							{__('Select Featured Post')}
-						</PostSelectButton>
+							onChange={newValue => {
+								console.log(newValue)
+								setAttributes({ featuredPost: {...newValue} })
+								console.log('onChange() => ', featuredPost)
+							}}
+						/>
 					</BaseControl>
 					}
 					{((featuredPost !== undefined) && displayFeaturedPost) &&
 						<div className="mlx-featured-post-title">
 							<span>{__('Currently Selected:')}</span>
-							<hr />
-							<h2>{decodeEntities(featuredPost.data.title.rendered)}</h2>
+							<h2>{featuredPost.title}</h2>
 						</div>
 					}
 
@@ -275,14 +276,21 @@ class LatestPostsBlock extends Component {
 					>
 						<h2 className="section-title t-up">{ __('Features') }</h2>
 						{((featuredPost !== undefined) && displayFeaturedPost) &&
-							<div className="mlx-featured-feature">
-								<img
-									src={featuredPost.data.mlx_featured_image.source_url} alt="title broken"
-								/>
-								{/* alt={decodeEntities(featuredPost.data.title.rendered.trim()) || __('(Untitled)')} */}
+							<div className="mlx-featured-feature"
+								hasImage={featuredPost.image !== undefined ? true : false}
+							>
+								{this.hasImage ? (
+									<img
+										src={featuredPost.image.source_url}
+										alt={featuredPost.image.alt_text || __('(Untitled)')}
+									/>
+								) : (
+									null
+								)
+								}
 								<div className="mlx-featured-feature__meta">
-									{/* <h1 className="ff__title">{decodeEntities(featuredPost.data.title.rendered)}</h1> */}
-									{/* <p className="ff__byline">{ __('by') + featuredPost.data.status }</p> */}
+									<h1 className="ff__title">{featuredPost.title || __('(Untitled)')}</h1>
+									{/* <p className="ff__byline">{ __('by') + featuredPost.author.status }</p> */}
 								</div>
 							</div>
 						}

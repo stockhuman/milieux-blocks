@@ -2,23 +2,15 @@
  * BLOCK: Milieux Blocks Page Grid
  */
 
+const { __ } = wp.i18n // Components
+const { registerBlockType } = wp.blocks; // Register block controls
+
 // Import block dependencies and components
 import edit from './edit';
 
 // Import CSS
 import './style.scss';
 import './editor.scss';
-
-// Components
-const { __ } = wp.i18n
-
-// Extend component
-// const { Component } = wp.element
-
-// Register block controls
-const {
-	registerBlockType,
-} = wp.blocks;
 
 // Register alignments
 const validAlignments = [ 'center', 'wide' ]
@@ -40,6 +32,7 @@ registerBlockType( 'milieux-blocks/features', {
 	attributes: {
 		featuredPost: {
 			type: 'object',
+			default: {},
 		},
 		displayFeaturedPost: {
 			type: 'boolean',

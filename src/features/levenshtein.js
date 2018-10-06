@@ -38,6 +38,6 @@ export default function levenshteinDistance(source, target) {
 			}
 		}
 	}
-	console.log(`levenshtein distance between ${source} and ${target} is ${matrix[ target.length ][ source.length ]}`)
+	// console.log(`levenshtein distance between ${source} and ${target} is ${matrix[ target.length ][ source.length ]}`)
 	return matrix[ target.length ][ source.length ];
 }

@@ -149,12 +149,11 @@ class PostSelector extends Component {
 	}
 
 	selectLink(post) {
-		// TODO: remove this - DEBUG only
-		console.log(post, `/wp/v2/${ post.subtype }s/${ post.id }`)
 		// get the "full" post data if a post was selected. this may be something to add as a prop in the future for custom use cases.
 		apiFetch({
 			path: `/wp/v2/${post.subtype}s/${post.id}`,
 		}).then(response => {
+			console.log(response)
 			const fullpost = {
 				title: decodeEntities(response.title.rendered),
 				id: response.id,
@@ -169,8 +168,6 @@ class PostSelector extends Component {
 			selectedSuggestion: null,
 			showSuggestions: false,
 		});
-		// TODO: remove this - DEBUG only
-		console.log(this.state)
 	}
 
 	renderSelectedPosts() {
