@@ -7,6 +7,16 @@
  */
 
 /**
+ * returns image aspect ratio, so to set padding and eliminate page reflows
+ * @param  [type] $ID [description]
+ * @return string     integer value representing the % height
+ */
+function _mlx__get_image_ratio_padding ($ID) {
+	$meta = wp_get_attachment_metadata($ID);
+	return ($meta['sizes']['medium']['height'] / $meta['sizes']['medium']['width']) * 100;
+}
+
+/**
  * Renders the post grid block on server.
  */
 function milieux_blocks_render_block_core_latest_posts( $attributes ) {
@@ -19,9 +29,49 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 		'category' => $attributes['categories'],
 	), 'OBJECT' );
 
+	// print_r($attributes);
 	$list_items_markup = '';
 
-if (is_array($recent_posts)) {
+	$featuredPost = $attributes['featuredPost']; // Array
+
+	// Check if a featured Post is set and toggled
+	if ($attributes['displayFeaturedPost'] == true && is_array($featuredPost)) {
+		$fp_ID = $featuredPost['id'];
+		$fp_img = $featuredPost['image'];
+
+		$list_items_markup .= sprintf(
+			'<div class="mlx-block-features featured"><div class="featured__inner">'
+		);
+
+		$list_items_markup .= sprintf(
+			'<noscript><img= src="%1$s"/></noscript>',
+			$fp_img['source_url']
+		);
+
+		$list_items_markup .= sprintf(
+			'<div class="featured__image-container" style="padding-bottom:%1$s%%">',
+			_mlx__get_image_ratio_padding ($fp_img['id'])
+		);
+
+		$list_items_markup .= sprintf(
+			'<img class="featured-image hero lazyload" src="%1$s" ',
+			$fp_img['source_url']
+		);
+
+		$list_items_markup .= sprintf(
+			'srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="%1$s" ',
+			wp_get_attachment_image_srcset($fp_img['id'])
+		);
+
+		$list_items_markup .= sprintf(
+			'data-sizes="auto" alt="%1$s"></div></div></div>', // close featured div
+			$fp_img['alt_text']
+		);
+	}
+
+
+
+	if (is_array($recent_posts)) {
 
 		foreach ( $recent_posts as $post ) {
 			// Get the post ID
