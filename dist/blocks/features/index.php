@@ -30,6 +30,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 	), 'OBJECT' );
 
 	// print_r($attributes);
+	$featured_post_markup = '';
 	$list_items_markup = '';
 
 	$featuredPost = $attributes['featuredPost']; // Array
@@ -39,33 +40,35 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 		$fp_ID = $featuredPost['id'];
 		$fp_img = $featuredPost['image'];
 
-		$list_items_markup .= sprintf(
+		$featured_post_markup .= sprintf(
 			'<div class="mlx-block-features featured"><div class="featured__inner">'
 		);
 
-		$list_items_markup .= sprintf(
+		$featured_post_markup .= sprintf(
 			'<noscript><img= src="%1$s"/></noscript>',
 			$fp_img['source_url']
 		);
 
-		$list_items_markup .= sprintf(
+		$featured_post_markup .= sprintf(
 			'<div class="featured__image-container" style="padding-bottom:%1$s%%">',
 			_mlx__get_image_ratio_padding ($fp_img['id'])
 		);
 
-		$list_items_markup .= sprintf(
+		$featured_post_markup .= sprintf(
 			'<img class="featured-image hero lazyload" src="%1$s" ',
 			$fp_img['source_url']
 		);
 
-		$list_items_markup .= sprintf(
+		$featured_post_markup .= sprintf(
 			'srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="%1$s" ',
 			wp_get_attachment_image_srcset($fp_img['id'])
 		);
 
-		$list_items_markup .= sprintf(
-			'data-sizes="auto" alt="%1$s"></div></div></div>', // close featured div
-			$fp_img['alt_text']
+		$featured_post_markup .= sprintf(
+			'data-sizes="auto" alt="%1$s"></div><a href="%2$s"><h2>%3$s</h2></a></div></div>', // close featured div
+			$fp_img['alt_text'],
+			esc_html($featuredPost['url']),
+			esc_html($featuredPost['title'])
 		);
 	}
 
@@ -95,9 +98,9 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 			// Get the featured image
 			if ( isset( $attributes['displayPostImage'] ) && $attributes['displayPostImage'] && $post_thumb_id ) {
 				if( $attributes['imageCrop'] === 'landscape' ) {
-					$post_thumb_size = 'thumbnail';
+					$post_thumb_size = 'landscape-large';
 				} else {
-					$post_thumb_size = 'medium';
+					$post_thumb_size = 'square-large'; // was medium
 				}
 
 				$list_items_markup .= sprintf(
@@ -217,8 +220,9 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 
 	// Output the post markup
 	$block_content = sprintf(
-		'<div class="%1$s"><div class="%2$s">%3$s</div></div>',
+		'<div class="%1$s"><h3 class="page-type-title">Features</h3>%2$s<div class="%3$s">%4$s</div></div>',
 		esc_attr( $class ),
+		$featured_post_markup,
 		esc_attr( $grid_class ),
 		$list_items_markup
 	);

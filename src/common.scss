@@ -1,3 +1,7 @@
 @import 'scss/media';
 @import 'scss/variables';
 @import 'scss/functions';
+
+@mixin font-size($font-size) {
+  font-size: ($font-size / $font-s-base)*1rem;
+}

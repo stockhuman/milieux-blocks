@@ -49,7 +49,7 @@ class PostSelector extends Component {
 
 	bindSuggestionNode(index) {
 		return ref => {
-			this.suggestionNodes[ index ] = ref;
+			this.suggestionNodes[index] = ref;
 		};
 	}
 
@@ -141,7 +141,7 @@ class PostSelector extends Component {
 			case ENTER: {
 				if (this.state.selectedSuggestion !== null) {
 					event.stopPropagation();
-					const post = this.state.posts[ this.state.selectedSuggestion ];
+					const post = this.state.posts[this.state.selectedSuggestion];
 					this.selectLink(post);
 				}
 			}
@@ -153,15 +153,20 @@ class PostSelector extends Component {
 		apiFetch({
 			path: `/wp/v2/${post.subtype}s/${post.id}`,
 		}).then(response => {
-			console.log(response)
+			const author = {
+				byline: response.bylines,
+				postAuthor: response.author,
+			}
 			const fullpost = {
-				title: decodeEntities(response.title.rendered),
 				id: response.id,
-				excerpt: decodeEntities(response.excerpt.rendered),
+				title: decodeEntities(response.title.rendered).trim(),
+				excerpt: decodeEntities(response.excerpt.rendered).trim(),
+				image: response,
+				author: author,
 				url: response.link,
-			};
+			}
 			// send data to the block;
-			this.props.onPostSelect(fullpost);
+			this.props.onPostSelect(fullpost)
 		});
 		this.setState({
 			input: '',
@@ -183,7 +188,7 @@ class PostSelector extends Component {
 									style={{ display: 'inline-flex', padding: '8px 2px', textAlign: 'center' }}
 									icon="arrow-up-alt2"
 									onClick={() => {
-										this.props.posts.splice(i - 1, 0, this.props.posts.splice(i, 1)[ 0 ]);
+										this.props.posts.splice(i - 1, 0, this.props.posts.splice(i, 1)[0]);
 										this.props.onChange(this.props.posts);
 										this.setState({ state: this.state });
 									}}
@@ -195,7 +200,7 @@ class PostSelector extends Component {
 									style={{ display: 'inline-flex', padding: '8px 2px', textAlign: 'center' }}
 									icon="arrow-down-alt2"
 									onClick={() => {
-										this.props.posts.splice(i + 1, 0, this.props.posts.splice(i, 1)[ 0 ]);
+										this.props.posts.splice(i + 1, 0, this.props.posts.splice(i, 1)[0]);
 										this.props.onChange(this.props.posts);
 										this.setState({ state: this.state });
 									}}
@@ -227,23 +232,23 @@ class PostSelector extends Component {
 			<Fragment>
 				{this.renderSelectedPosts()}
 				<div className="editor-url-input">
-					<input autoFocus={autoFocus} type="text" aria-label={'URL'} required value={input} onChange={this.onChange} onInput={stopEventPropagation} placeholder={'Type page or post name'} onKeyDown={this.onKeyDown} role="combobox" aria-expanded={showSuggestions} aria-autocomplete="list" aria-owns={`editor-url-input-suggestions-${instanceId}`} aria-activedescendant={selectedSuggestion !== null ? `editor-url-input-suggestion-${instanceId}-${selectedSuggestion}` : undefined} />
+					<input autoFocus={autoFocus} type="text" aria-label={'URL'} required value={input} onChange={this.onChange} onInput={stopEventPropagation} placeholder={'Search by post name'} onKeyDown={this.onKeyDown} role="combobox" aria-expanded={showSuggestions} aria-autocomplete="list" aria-owns={`editor-url-input-suggestions-${instanceId}`} aria-activedescendant={selectedSuggestion !== null ? `editor-url-input-suggestion-${instanceId}-${selectedSuggestion}` : undefined} />
 
 					{loading && <Spinner />}
 				</div>
 
 				{showSuggestions &&
 					!!posts.length && (
-					<Popover position="bottom" noArrow focusOnMount={false}>
-						<div className="editor-url-input__suggestions" id={`editor-url-input-suggestions-${instanceId}`} ref={this.bindListNode} role="listbox">
-							{posts.map((post, index) => (
-								<button key={post.id} role="option" tabIndex="-1" id={`editor-url-input-suggestion-${instanceId}-${index}`} ref={this.bindSuggestionNode(index)} className={`editor-url-input__suggestion ${index === selectedSuggestion ? 'is-selected' : ''}`} onClick={() => this.selectLink(post)} aria-selected={index === selectedSuggestion}>
-									{decodeEntities(post.title) || '(no title)'}
-								</button>
-							))}
-						</div>
-					</Popover>
-				)}
+						<Popover position="bottom" noArrow focusOnMount={false}>
+							<div className="editor-url-input__suggestions" id={`editor-url-input-suggestions-${instanceId}`} ref={this.bindListNode} role="listbox">
+								{posts.map((post, index) => (
+									<button key={post.id} role="option" tabIndex="-1" id={`editor-url-input-suggestion-${instanceId}-${index}`} ref={this.bindSuggestionNode(index)} className={`editor-url-input__suggestion ${index === selectedSuggestion ? 'is-selected' : ''}`} onClick={() => this.selectLink(post)} aria-selected={index === selectedSuggestion}>
+										{decodeEntities(post.title) || '(no title)'}
+									</button>
+								))}
+							</div>
+						</Popover>
+					)}
 			</Fragment>
 		);
 		/* eslint-enable jsx-a11y/no-autofocus */

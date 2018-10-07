@@ -1,0 +1,210 @@
+@import '../common';
+
+// for milieux blocks - move when ready
+$mlx-features__total-columns: 4;
+
+.mlx-block-features {
+	background: $gray-darker;
+
+			// ovveride to a style provided by the milieux theme
+		.page-type-title {
+			color: rgba($white, 0.22);
+			max-width: 1400px;
+			margin: u() auto;
+			text-transform: uppercase;
+			letter-spacing: 0.01px;
+			padding: u(3);
+		}
+
+	// The featured post
+	.featured {
+		margin-top: u(2);
+		margin-bottom: u(4);
+
+
+		@at-root #{&}__inner {
+			display: grid;
+			grid-template-columns: 40% 1fr;
+			grid-gap: u(2);
+
+			a {
+				text-decoration: none;
+			}
+
+			h2 {
+				color: $white;
+				text-transform: uppercase;
+
+			}
+		}
+
+
+		.featured__image-container {
+			position: relative;
+			height: 0;
+			display: block;
+			width: 100%;
+
+
+			/* padding-bottom is calculated and rendered in to HTML */
+
+			img {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+		}
+	}
+
+
+	@at-root #{&}__container {
+		padding: u();
+		max-width: 1400px;
+		margin: 0 auto;
+		@include media('>tablet') { & {
+			padding: u(2);
+		}}
+
+		@include media('>desktop') { & {
+
+		}}
+
+		&.is-grid {
+			display: grid;
+			flex-wrap: wrap;
+			grid-gap: u();
+		}
+		@for $i from 0 through $mlx-features__total-columns {
+			&.columns-#{$i} {
+				grid-template-columns: repeat(#{$i}, 1fr);
+				@include media('<1000px') { & {
+					display: block;
+				}}
+			}
+		}
+
+		// the article proper
+		article {
+			display: inline-grid;
+			@include media('>tablet') { & {
+				grid-template-columns: 1fr 1fr;
+			}}
+
+			@include media('>desktop') { & {
+
+			}}
+
+
+		}
+	}
+
+	@at-root #{&}__image {
+		overflow: hidden;
+		background: $gray-darker;
+		margin: u();
+		img {
+			transform: scale(1.05);
+			transition:
+				opacity .3s cubic-bezier(.215,.61,.355,1),
+				transform .5s cubic-bezier(.215,.61,.355,1);
+			&:hover {
+				opacity: 0.7;
+				transform: scale(1);
+			}
+		}
+	}
+
+	@at-root #{&}__text {
+		color: $white;
+
+		@include media('>tablet') { & {
+			padding: u()
+		}}
+
+		@include media('>desktop') { & {
+
+		}}
+	}
+
+	@at-root #{&}__title {
+		line-height: 20px;
+		padding-top: 0 !important;
+		margin-bottom: u();
+	}
+
+	@at-root #{&}__title a {
+		color: $white;
+		text-decoration: none;
+		font-family: $font-mono;
+		@include font-size(20);
+
+		@include media('>tablet') { & {
+
+		}}
+
+		@include media('>desktop') { & {
+
+		}}
+	}
+
+	@at-root #{&}__byline {
+		opacity: .7;
+	  transition: opacity .2s ease;
+	  &:hover {
+		  opacity: 1;
+    }
+
+		@include media('>tablet') { & {
+
+		}}
+
+		@include media('>desktop') { & {
+
+		}}
+	}
+
+	@at-root #{&}__excerpt {
+		color: $gray;
+		@include media('>tablet') { & {
+
+		}}
+
+		@include media('>desktop') { & {
+
+		}}
+	}
+
+	@at-root #{&}__link {
+		font-family: $font-mono;
+		color: $white;
+		opacity: 1;
+		display: block;
+		padding-top: u();
+		@include media('>tablet') { & {
+
+		}}
+
+		@include media('>desktop') { & {
+
+		}}
+	}
+
+	@at-root #{&}__date {
+		font-family: $font-mono;
+		color: $white;
+		opacity: 1;
+		display: block;
+		font-size: 10px;
+		padding-bottom: u(2);
+		@include media('>tablet') { & {
+
+		}}
+
+		@include media('>desktop') { & {
+
+		}}
+	}
+}

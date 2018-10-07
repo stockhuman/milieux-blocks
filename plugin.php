@@ -49,9 +49,9 @@ function milieux_blocks_loader() {
 	 */
 	function milieux_block_assets() {
 		wp_enqueue_style( 'milieux-blocks',
-			plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ),
-			array('') //array( 'wp-blocks' )
-			// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' )
+			MLX_BLOCKS_URL . 'dist/blocks.style.build.css',
+			array( 'wp-blocks' ),
+			'', ''// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' )
 		);
 	}
 
@@ -87,6 +87,8 @@ function milieux_blocks_loader() {
 	/**
 	 * Load Post Grid PHP
 	 */
+	add_image_size( 'square-large', 1024, 1024, true ); // used in the following code
+	add_image_size( 'landscape-medium', 1024, 576, true );
 	require_once plugin_dir_path( __FILE__ ) . 'dist/blocks/features/index.php';
 }
 add_action( 'plugins_loaded', 'milieux_blocks_loader' );
