@@ -1,14 +1,14 @@
 @import '../common.scss';
 
 // setup
-.wp-block-milieux-blocks-features {
+.wp-block-milieux-blocks-events {
 	width: 100%;
 	background: #f7f9fe;
 	border-radius: 4px;
 	padding: u();
 }
 
-[data-type="milieux-blocks/features"] {
+[data-type="milieux-blocks/events"] {
 	max-width: 100% !important;
 }
 

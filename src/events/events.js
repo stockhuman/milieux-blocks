@@ -30,11 +30,11 @@ registerBlockType( 'milieux-blocks/events', {
 	],
 
 	attributes: {
-		featuredPost: {
+		mainEvent: {
 			type: 'object',
 			default: {},
 		},
-		displayFeaturedPost: {
+		displayMainEvent: {
 			type: 'boolean',
 			default: false,
 		},
@@ -55,10 +55,6 @@ registerBlockType( 'milieux-blocks/events', {
 			default: false,
 		},
 		displayPostExcerpt: {
-			type: 'boolean',
-			default: false,
-		},
-		displayPostAuthor: {
 			type: 'boolean',
 			default: false,
 		},

@@ -157,11 +157,15 @@ class PostSelector extends Component {
 				byline: response.bylines,
 				postAuthor: response.author,
 			}
+
+			// Custom prop set by this plugin, return null on fail
+			const image = response.mlx_featured_image || null
+
 			const fullpost = {
 				id: response.id,
 				title: decodeEntities(response.title.rendered).trim(),
 				excerpt: decodeEntities(response.excerpt.rendered).trim(),
-				image: response,
+				image: image,
 				author: author,
 				url: response.link,
 			}

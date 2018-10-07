@@ -9,6 +9,7 @@
  * Webpack is compiling as the input file.
  */
 
-import './hero/hero.js';
+import './hero/hero.js'
 import './features/features.js'
+import './events/events.js'
 import './postSelect/main.js'

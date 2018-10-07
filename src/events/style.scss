@@ -1,7 +1,7 @@
 @import '../common';
 
 // for milieux blocks - move when ready
-$mlx-features__total-columns: 4;
+$mlx-evenst__total-columns: 2;
 
 .mlx-block-features {
 	background: $gray-darker;
@@ -77,14 +77,14 @@ $mlx-features__total-columns: 4;
 			flex-wrap: wrap;
 			grid-gap: u();
 		}
-		@for $i from 0 through $mlx-features__total-columns {
-			&.columns-#{$i} {
-				grid-template-columns: repeat(#{$i}, 1fr);
-				@include media('<1000px') { & {
-					display: block;
-				}}
-			}
-		}
+		// @for $i from 0 through $mlx-features__total-columns {
+		// 	&.columns-#{$i} {
+		// 		grid-template-columns: repeat(#{$i}, 1fr);
+		// 		@include media('<1000px') { & {
+		// 			display: block;
+		// 		}}
+		// 	}
+		// }
 
 		// the article proper
 		article {

@@ -1,6 +1,8 @@
 <?php
 /**
- * Server-side rendering for the post grid block
+ * Server-side rendering for the Recent Ecents showcase block
+ * This inherits a lot of logic from the events block, yet due to time constraints
+ * does not benefit from any inheritance or shared methods
  *
  * @since 	1.1.7
  * @package Milieux Blocks
@@ -19,7 +21,7 @@ function _mlx__get_image_ratio_padding ($ID) {
 /**
  * Renders the post grid block on server.
  */
-function milieux_blocks_render_block_core_latest_posts( $attributes ) {
+function milieux_blocks_render_block_core_latest_events( $attributes ) {
 	$recent_posts = wp_get_recent_posts( array(
 		'numberposts' => $attributes['postsToShow'],
 		'post_status' => 'publish',
@@ -30,45 +32,45 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 	), 'OBJECT' );
 
 	// print_r($attributes);
-	$featured_post_markup = '';
+	$main_event_markup = '';
 	$list_items_markup = '';
 
-	$featuredPost = $attributes['featuredPost']; // Array
+	$mainEvent = $attributes['mainEvent']; // Array
 
 	// Check if a featured Post is set and toggled
-	if ($attributes['displayFeaturedPost'] == true && is_array($featuredPost)) {
-		$fp_ID = $featuredPost['id'];
-		$fp_img = $featuredPost['image'];
+	if ($attributes['displayMainEvent'] == true && is_array($mainEvent)) {
+		$fp_ID = $mainEvent['id'];
+		$fp_img = $mainEvent['image'];
 
-		$featured_post_markup .= sprintf(
-			'<div class="mlx-block-features featured"><div class="featured__inner">'
+		$main_event_markup .= sprintf(
+			'<div class="mlx-block-events main-event"><div class="main-event__inner">'
 		);
 
-		$featured_post_markup .= sprintf(
+		$main_event_markup .= sprintf(
 			'<noscript><img= src="%1$s"/></noscript>',
 			$fp_img['source_url']
 		);
 
-		$featured_post_markup .= sprintf(
-			'<div class="featured__image-container" style="padding-bottom:%1$s%%">',
+		$main_event_markup .= sprintf(
+			'<div class="main-event__image-container" style="padding-bottom:%1$s%%">',
 			_mlx__get_image_ratio_padding ($fp_img['id'])
 		);
 
-		$featured_post_markup .= sprintf(
-			'<img class="featured-image hero lazyload" src="%1$s" ',
+		$main_event_markup .= sprintf(
+			'<img class="main-event-image hero lazyload" src="%1$s" ',
 			$fp_img['source_url']
 		);
 
-		$featured_post_markup .= sprintf(
+		$main_event_markup .= sprintf(
 			'srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="%1$s" ',
 			wp_get_attachment_image_srcset($fp_img['id'])
 		);
 
-		$featured_post_markup .= sprintf(
-			'data-sizes="auto" alt="%1$s"></div><a href="%2$s"><h2>%3$s</h2></a></div></div>', // close featured div
+		$main_event_markup .= sprintf(
+			'data-sizes="auto" alt="%1$s"></div><a href="%2$s"><h2>%3$s</h2></a></div></div>', // close main-event div
 			$fp_img['alt_text'],
-			esc_html($featuredPost['url']),
-			esc_html($featuredPost['title'])
+			esc_html($mainEvent['url']),
+			esc_html($mainEvent['title'])
 		);
 	}
 
@@ -95,7 +97,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 				esc_attr( $post_thumb_class )
 			);
 
-			// Get the featured image
+			// Get the main-event image
 			if ( isset( $attributes['displayPostImage'] ) && $attributes['displayPostImage'] && $post_thumb_id ) {
 				if( $attributes['imageCrop'] === 'landscape' ) {
 					$post_thumb_size = 'landscape-large';
@@ -104,7 +106,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 				}
 
 				$list_items_markup .= sprintf(
-					'<div class="mlx-block-features__image"><a href="%1$s" rel="bookmark">%2$s</a></div>',
+					'<div class="mlx-block-events__image"><a href="%1$s" rel="bookmark">%2$s</a></div>',
 					esc_url( get_permalink( $post_id ) ),
 					wp_get_attachment_image( $post_thumb_id, $post_thumb_size )
 				);
@@ -112,7 +114,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 
 			// Wrap the text content
 			$list_items_markup .= sprintf(
-				'<div class="mlx-block-features__text">'
+				'<div class="mlx-block-events__text">'
 			);
 
 				// Get the post title
@@ -123,20 +125,20 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 				}
 
 				$list_items_markup .= sprintf(
-					'<h2 class="mlx-block-features__title"><a href="%1$s" rel="bookmark">%2$s</a></h2>',
+					'<h2 class="mlx-block-events__title"><a href="%1$s" rel="bookmark">%2$s</a></h2>',
 					esc_url( get_permalink( $post_id ) ),
 					esc_html( $title )
 				);
 
 				// Wrap the byline content
 				$list_items_markup .= sprintf(
-					'<div class="mlx-block-features__byline">'
+					'<div class="mlx-block-events__byline">'
 				);
 
 					// Get the post author
 					if ( isset( $attributes['displayPostAuthor'] ) && $attributes['displayPostAuthor'] ) {
 						$list_items_markup .= sprintf(
-							'<div class="mlx-block-features__author"><a class="ab-text-link" href="%2$s">%1$s</a></div>',
+							'<div class="mlx-block-events__author"><a class="ab-text-link" href="%2$s">%1$s</a></div>',
 							esc_html( get_the_author_meta( 'display_name', $post->post_author ) ),
 							esc_html( get_author_posts_url( $post->post_author ) )
 						);
@@ -145,7 +147,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 					// Get the post date
 					if ( isset( $attributes['displayPostDate'] ) && $attributes['displayPostDate'] ) {
 						$list_items_markup .= sprintf(
-							'<time datetime="%1$s" class="mlx-block-features__date">%2$s</time>',
+							'<time datetime="%1$s" class="mlx-block-events__date">%2$s</time>',
 							esc_attr( get_the_date( 'c', $post_id ) ),
 							esc_html( get_the_date( '', $post_id ) )
 						);
@@ -158,7 +160,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 
 				// Wrap the excerpt content
 				$list_items_markup .= sprintf(
-					'<div class="mlx-block-features__excerpt">'
+					'<div class="mlx-block-events__excerpt">'
 				);
 
 					// Get the excerpt
@@ -178,7 +180,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 
 					if ( isset( $attributes['displayPostLink'] ) && $attributes['displayPostLink'] ) {
 						$list_items_markup .= sprintf(
-							'<p><a class="mlx-block-features__link" href="%1$s" rel="bookmark">%2$s</a></p>',
+							'<p><a class="mlx-block-events__link" href="%1$s" rel="bookmark">%2$s</a></p>',
 							esc_url( get_permalink( $post_id ) ),
 							esc_html__( 'Continue Reading', 'milieux-blocks' )
 						);
@@ -200,13 +202,13 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 	}
 
 	// Build the classes
-	$class = "mlx-block-features align{$attributes['align']}";
+	$class = "mlx-block-events align{$attributes['align']}";
 
 	if ( isset( $attributes['className'] ) ) {
 		$class .= ' ' . $attributes['className'];
 	}
 
-	$grid_class = 'mlx-block-features__container';
+	$grid_class = 'mlx-block-events__container';
 
 	if ( isset( $attributes['postLayout'] ) && 'list' === $attributes['postLayout'] ) {
 		$grid_class .= ' is-list';
@@ -222,7 +224,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 	$block_content = sprintf(
 		'<div class="%1$s"><h3 class="page-type-title">Features</h3>%2$s<div class="%3$s">%4$s</div></div>',
 		esc_attr( $class ),
-		$featured_post_markup,
+		$main_event_markup,
 		esc_attr( $grid_class ),
 		$list_items_markup
 	);
@@ -231,16 +233,16 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 }
 
 /**
- * Registers the `core/latest-posts` block on server.
+ * Registers the `core/latest-events` block on server.
  */
-function milieux_blocks_register_block_core_latest_posts() {
+function milieux_blocks_register_block_core_latest_events() {
 
 	// Check if the register function exists
 	if ( ! function_exists( 'register_block_type' ) ) {
 		return;
 	}
 
-	register_block_type( 'milieux-blocks/features', array(
+	register_block_type( 'milieux-blocks/events', array(
 		'attributes' => array(
 			'categories' => array(
 				'type' => 'string',
@@ -251,14 +253,6 @@ function milieux_blocks_register_block_core_latest_posts() {
 			'postsToShow' => array(
 				'type' => 'number',
 				'default' => 6,
-			),
-			'displayPostDate' => array(
-				'type' => 'boolean',
-				'default' => true,
-			),
-			'displayPostExcerpt' => array(
-				'type' => 'boolean',
-				'default' => true,
 			),
 			'displayPostAuthor' => array(
 				'type' => 'boolean',
@@ -296,33 +290,29 @@ function milieux_blocks_register_block_core_latest_posts() {
 				'type' => 'string',
 				'default' => 'date',
 			),
-			'imageCrop'  => array(
-				'type' => 'string',
-				'default' => 'landscape',
-			),
-			'featuredPost' => array(
+			'mainEvent' => array(
 				'type' => 'object',
 				'default' => 0,
 			),
-			'displayFeaturedPost' => array(
+			'displayMainEvent' => array(
 				'type' => 'boolean',
 				'default' => false,
 			)
 		),
-		'render_callback' => 'milieux_blocks_render_block_core_latest_posts',
+		'render_callback' => 'milieux_blocks_render_block_core_latest_events',
 	) );
 }
 
-add_action( 'init', 'milieux_blocks_register_block_core_latest_posts' );
+add_action( 'init', 'milieux_blocks_register_block_core_latest_events' );
 
 
 /**
  * Create API fields for additional info
  */
 function milieux_blocks_register_rest_fields() {
-	// Add landscape featured image source
+	// Add landscape main-event image source
 	register_rest_field(
-		'feature',
+		'event',
 		'featured_image_src',
 		array(
 			'get_callback' => 'milieux_blocks_get_image_src_landscape',
@@ -333,7 +323,7 @@ function milieux_blocks_register_rest_fields() {
 
 	// Add square featured image source
 	register_rest_field(
-		'feature',
+		'event',
 		'featured_image_src_square',
 		array(
 			'get_callback' => 'milieux_blocks_get_image_src_square',
@@ -344,7 +334,7 @@ function milieux_blocks_register_rest_fields() {
 
 	// Add author info
 	register_rest_field(
-		'feature',
+		'event',
 		'author',
 		array(
 			'get_callback' => 'milieux_blocks_get_author_info',
@@ -362,7 +352,7 @@ add_action( 'rest_api_init', 'milieux_blocks_register_rest_fields' );
 function milieux_blocks_get_image_src_landscape( $object, $field_name, $request ) {
 	$feat_img_array = wp_get_attachment_image_src(
 		$object['featured_media'],
-		'mlx-block-features__landscape',
+		'mlx-block-events__landscape',
 		false
 	);
 	return $feat_img_array[0];
@@ -374,7 +364,7 @@ function milieux_blocks_get_image_src_landscape( $object, $field_name, $request 
 function milieux_blocks_get_image_src_square( $object, $field_name, $request ) {
 	$feat_img_array = wp_get_attachment_image_src(
 		$object['featured_media'],
-		'mlx-block-features__square',
+		'mlx-block-events__square',
 		false
 	);
 	return $feat_img_array[0];
@@ -387,8 +377,6 @@ function milieux_blocks_get_author_info( $object, $field_name, $request ) {
 	$post_author = (int) $object['author'];
 
 	$array_data = array();
-	// $array_data['login'] = get_the_author_meta('login');
-	// $array_data['email'] = get_the_author_meta('email');
 	$array_data['user_nicename'] = get_the_author_meta('user_nicename');
 	$array_data['first_name'] = get_user_meta($post_author, 'first_name', true);
 	$array_data['last_name'] = get_user_meta($post_author, 'last_name', true);

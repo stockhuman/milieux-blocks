@@ -33,24 +33,16 @@ const {
 } = wp.editor;
 
 const MAX_POSTS_COLUMNS = 4;
+const MAX_EVENTS = 12;
 
 class LatestPostsBlock extends Component {
 	constructor() {
 		super( ...arguments );
 
-		this.toggleDisplayPostDate = this.toggleDisplayPostDate.bind( this );
 		this.toggleDisplayPostExcerpt = this.toggleDisplayPostExcerpt.bind( this );
-		this.toggleDisplayPostAuthor = this.toggleDisplayPostAuthor.bind( this );
 		this.toggleDisplayPostImage = this.toggleDisplayPostImage.bind( this );
 		this.toggleDisplayPostLink = this.toggleDisplayPostLink.bind( this );
-		this.toggleDisplayFeaturedPost = this.toggleDisplayFeaturedPost.bind( this );
-	}
-
-	toggleDisplayPostDate() {
-		const { displayPostDate } = this.props.attributes;
-		const { setAttributes } = this.props;
-
-		setAttributes( { displayPostDate: ! displayPostDate } );
+		this.toggleDisplayMainEvent = this.toggleDisplayMainEvent.bind( this );
 	}
 
 	toggleDisplayPostExcerpt() {
@@ -58,13 +50,6 @@ class LatestPostsBlock extends Component {
 		const { setAttributes } = this.props;
 
 		setAttributes( { displayPostExcerpt: ! displayPostExcerpt } );
-	}
-
-	toggleDisplayPostAuthor() {
-		const { displayPostAuthor } = this.props.attributes;
-		const { setAttributes } = this.props;
-
-		setAttributes( { displayPostAuthor: ! displayPostAuthor } );
 	}
 
 	toggleDisplayPostImage() {
@@ -81,11 +66,11 @@ class LatestPostsBlock extends Component {
 		setAttributes( { displayPostLink: ! displayPostLink } );
 	}
 
-	toggleDisplayFeaturedPost() {
-		const { displayFeaturedPost } = this.props.attributes
+	toggleDisplayMainEvent() {
+		const { displayMainEvent } = this.props.attributes
 		const { setAttributes } = this.props
 
-		setAttributes( { displayFeaturedPost: ! displayFeaturedPost } )
+		setAttributes( { displayMainEvent: ! displayMainEvent } )
 	}
 
 	render() {
@@ -95,13 +80,11 @@ class LatestPostsBlock extends Component {
 			align,
 			categories,
 			columns,
-			displayFeaturedPost,
-			displayPostAuthor,
-			displayPostDate,
+			displayMainEvent,
 			displayPostExcerpt,
 			displayPostImage,
 			displayPostLink,
-			featuredPost,
+			mainEvent,
 			imageCrop,
 			order,
 			orderBy,
@@ -109,47 +92,39 @@ class LatestPostsBlock extends Component {
 			postsToShow,
 		} = attributes;
 
-		// Thumbnail options
-		const imageCropOptions = [
-			{ value: 'landscape', label: __( 'Landscape' ) },
-			{ value: 'square', label: __( 'Square' ) },
-		];
-
 		const inspectorControls = (
 			<InspectorControls>
-				<PanelBody title={ __( 'Featured Feature' ) }>
+				<PanelBody title={ __( 'Featured Event' ) }>
 					<ToggleControl
-						label={__('Show Featured Post')}
-						checked={displayFeaturedPost}
-						onChange={this.toggleDisplayFeaturedPost}
+						label={__('Show Featured Event')}
+						checked={displayMainEvent}
+						onChange={this.toggleDisplayMainEvent}
 					/>
-					{displayFeaturedPost &&
+					{displayMainEvent &&
 					<BaseControl
 						id="post-select-btn"
-						label="Select or update the featured post">
+						label="Select or update the featured event">
 						<PostSelector
 							posts={[]}
 							onPostSelect={post => {
-								setAttributes({
-									featuredPost: post,
-									fp: JSON.stringify(post),
-								})
+								setAttributes({ mainEvent: post })
+								console.log(post)
 							}}
 							onChange={newValue => {
-								setAttributes({ featuredPost: {...newValue} })
+								setAttributes({ mainEvent: {...newValue} })
 							}}
 						/>
 					</BaseControl>
 					}
-					{((featuredPost !== undefined) && displayFeaturedPost) &&
+					{((mainEvent !== undefined) && displayMainEvent) &&
 						<div className="mlx-featured-post-title">
 							<span>{__('Currently Selected:')}</span>
-							<h2>{featuredPost.title}</h2>
+							<h2>{mainEvent.title}</h2>
 						</div>
 					}
 
 				</PanelBody>
-				<PanelBody title={ __( 'Post Grid Settings' ) }>
+				<PanelBody title={ __( 'Display Settings' ) }>
 					<QueryControls
 						{ ...{ order, orderBy } }
 						numberOfItems={ postsToShow }
@@ -183,26 +158,10 @@ class LatestPostsBlock extends Component {
 						/>
 					}
 					<ToggleControl
-						label={ __( 'Display Post Author' ) }
-						checked={ displayPostAuthor }
-						onChange={ this.toggleDisplayPostAuthor }
-					/>
-					<ToggleControl
-						label={ __( 'Display Post Date' ) }
-						checked={ displayPostDate }
-						onChange={ this.toggleDisplayPostDate }
-					/>
-					<ToggleControl
 						label={ __( 'Display Post Excerpt' ) }
 						checked={ displayPostExcerpt }
 						onChange={ this.toggleDisplayPostExcerpt }
 					/>
-					<ToggleControl
-						label={ __( 'Display Continue Reading Link' ) }
-						checked={ displayPostLink }
-						onChange={ this.toggleDisplayPostLink }
-					/>
-
 				</PanelBody>
 			</InspectorControls>
 		);
@@ -214,11 +173,11 @@ class LatestPostsBlock extends Component {
 					{ inspectorControls }
 					<Placeholder
 						icon="admin-post"
-						label={ __( 'Milieux Features Block' ) }
+						label={ __( 'Milieux Events Block' ) }
 					>
 						{ ! Array.isArray( latestPosts ) ?
 							<Spinner /> :
-							__( 'No posts found.' )
+							__( 'No Current Events found.' )
 						}
 					</Placeholder>
 				</Fragment>
@@ -261,7 +220,7 @@ class LatestPostsBlock extends Component {
 				<div
 					className={ classnames(
 						this.props.className,
-						'mlx-features',
+						'mlx-events',
 					) }
 				>
 					<div
@@ -269,27 +228,26 @@ class LatestPostsBlock extends Component {
 							'is-grid': postLayout === 'grid',
 							'is-list': postLayout === 'list',
 							[ `columns-${ columns }` ]: postLayout === 'grid',
-							'mlx-features__items': 'mlx-features__items',
+							'mlx-events__items': 'mlx-events__items',
 						} ) }
 					>
-						<h2 className="section-title t-up">{ __('Features') }</h2>
-						{((featuredPost !== undefined) && displayFeaturedPost) &&
-							<div className="mlx-featured-feature"
-								hasImage={featuredPost.image !== null ? true : false}
+						<h2 className="section-title t-up">{ __('Events') }</h2>
+						{((mainEvent !== undefined) && displayMainEvent) &&
+							<div className="mlx-main-event"
+								hasImage={mainEvent.image !== null ? true : false}
 							>
-								{/* {this.hasImage ? ( */}
+								{this.hasImage ? (
 									<img
-										className="mlx-featured-feature__image"
-										src={featuredPost.image.source_url}
-										alt={featuredPost.image.alt_text || __('(Untitled)')}
+										className="mlx-main-event__image"
+										src={mainEvent.image.source_url}
+										alt={mainEvent.image.alt_text || __('(Untitled)')}
 									/>
-								{/* ) : (
-									null
-								)
-								} */}
-								<div className="mlx-featured-feature__meta">
-									<h1 className="ff__title">{featuredPost.title || __('(Untitled)')}</h1>
-									{/* <p className="ff__byline">{ __('by') + featuredPost.author.status }</p> */}
+								) : (
+								 	null
+								 )
+							 	}
+								<div className="mlx-main-event__meta">
+									<h2 className="main-event__title">{mainEvent.title || __('(Untitled)')}</h2>
 								</div>
 							</div>
 						}
@@ -301,21 +259,6 @@ class LatestPostsBlock extends Component {
 									this.hasImage && displayPostImage ? 'has-thumb' : 'no-thumb'
 								) }
 							>
-								{
-									displayPostImage && this.hasImage ? (
-										<div className="mlx-block-post-grid-image">
-											<a href={ post.link }	target="_blank" rel="noopener noreferrer" >
-												<img
-													src={ post.mlx_featured_image.source_url }
-													alt={ decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)' ) }
-												/>
-											</a>
-										</div>
-									) : (
-										null
-									)
-								}
-
 								<div className="mlx-block-post-grid-text">
 									<h2 className="entry-title">
 										<a href={ post.link } target="_blank" rel="noopener noreferrer">
@@ -324,11 +267,7 @@ class LatestPostsBlock extends Component {
 									</h2>
 
 									<div className="mlx-block-post-grid-byline">
-										{ displayPostAuthor && post.author_info &&
-											<div className="mlx-block-post-grid-author"><a className="mlx-text-link" target="_blank" rel="noopener noreferrer" href={ post.author_info.author_link }>{ post.author_info.display_name }</a></div>
-										}
-
-										{ displayPostDate && post.date_gmt &&
+										{ post.date_gmt &&
 											<time dateTime={ moment( post.date_gmt ).utc().format() } className={ 'mlx-block-post-grid-date' }>
 												{ moment( post.date_gmt ).local().format( 'MMMM DD, Y' ) }
 											</time>
