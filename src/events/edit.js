@@ -7,7 +7,7 @@ import pickBy from 'lodash/pickBy';
 import moment from 'moment';
 import classnames from 'classnames';
 
-import PostSelector from './select-post.js'
+import PostSelector from '../postSelect/PostSelector.js'
 
 const { Component, Fragment } = wp.element;
 const { __ } = wp.i18n;
@@ -136,9 +136,7 @@ class LatestPostsBlock extends Component {
 								})
 							}}
 							onChange={newValue => {
-								console.log(newValue)
 								setAttributes({ featuredPost: {...newValue} })
-								console.log('onChange() => ', featuredPost)
 							}}
 						/>
 					</BaseControl>
@@ -369,7 +367,7 @@ export default withSelect( ( select, props ) => {
 		per_page: 40,
 	};
 	return {
-		latestPosts: getEntityRecords( 'postType', 'feature', latestPostsQuery ), // this is where the magic happened
+		latestPosts: getEntityRecords( 'postType', 'event', latestPostsQuery ), // this is where the magic happened
 		categoriesList: getEntityRecords( 'taxonomy', 'category', categoriesListQuery ),
 	};
 } )( LatestPostsBlock );
