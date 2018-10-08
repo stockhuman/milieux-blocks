@@ -280,11 +280,11 @@ class LatestPostsBlock extends Component {
 								hasImage={featuredPost.image !== null ? true : false}
 							>
 								{/* {this.hasImage ? ( */}
-									<img
-										className="mlx-featured-feature__image"
-										src={featuredPost.image.source_url}
-										alt={featuredPost.image.alt_text || __('(Untitled)')}
-									/>
+								<img
+									className="mlx-featured-feature__image"
+									src={featuredPost.image.source_url}
+									alt={featuredPost.image.alt_text || __('(Untitled)')}
+								/>
 								{/* ) : (
 									null
 								)
