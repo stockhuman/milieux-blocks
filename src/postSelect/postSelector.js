@@ -18,6 +18,16 @@ function debounce(func, wait = 100) {
 	};
 }
 
+// finds keys matching those input in an array and returns them as properties to an object
+function requestKeys(request, data) {
+	const validKeys = Object.keys(data).filter(key => request.includes(key.toString()))
+	let response = {}
+	validKeys.forEach(el => {
+		response[ el ] = data[ el ]
+	})
+	return response
+}
+
 class PostSelector extends Component {
 	constructor() {
 		super(...arguments);
@@ -49,7 +59,7 @@ class PostSelector extends Component {
 
 	bindSuggestionNode(index) {
 		return ref => {
-			this.suggestionNodes[index] = ref;
+			this.suggestionNodes[ index ] = ref;
 		};
 	}
 
@@ -77,6 +87,8 @@ class PostSelector extends Component {
 				search: value,
 				per_page: 20,
 				type: 'post',
+				// Optionally add post subtype to search, via https://stackoverflow.com/questions/11704267/
+				...(this.props.subtype !== '' && { subtype: this.props.subtype }),
 			}),
 		});
 
@@ -141,7 +153,7 @@ class PostSelector extends Component {
 			case ENTER: {
 				if (this.state.selectedSuggestion !== null) {
 					event.stopPropagation();
-					const post = this.state.posts[this.state.selectedSuggestion];
+					const post = this.state.posts[ this.state.selectedSuggestion ];
 					this.selectLink(post);
 				}
 			}
@@ -153,11 +165,6 @@ class PostSelector extends Component {
 		apiFetch({
 			path: `/wp/v2/${post.subtype}s/${post.id}`,
 		}).then(response => {
-			const author = {
-				byline: response.bylines,
-				postAuthor: response.author,
-			}
-
 			// Custom prop set by this plugin, return null on fail
 			const image = response.mlx_featured_image || null
 
@@ -166,8 +173,9 @@ class PostSelector extends Component {
 				title: decodeEntities(response.title.rendered).trim(),
 				excerpt: decodeEntities(response.excerpt.rendered).trim(),
 				image: image,
-				author: author,
+				author: response.author,
 				url: response.link,
+				...(this.props.keys && { ...requestKeys(this.props.keys, response) }),
 			}
 			// send data to the block;
 			this.props.onPostSelect(fullpost)
@@ -192,7 +200,7 @@ class PostSelector extends Component {
 									style={{ display: 'inline-flex', padding: '8px 2px', textAlign: 'center' }}
 									icon="arrow-up-alt2"
 									onClick={() => {
-										this.props.posts.splice(i - 1, 0, this.props.posts.splice(i, 1)[0]);
+										this.props.posts.splice(i - 1, 0, this.props.posts.splice(i, 1)[ 0 ]);
 										this.props.onChange(this.props.posts);
 										this.setState({ state: this.state });
 									}}
@@ -204,7 +212,7 @@ class PostSelector extends Component {
 									style={{ display: 'inline-flex', padding: '8px 2px', textAlign: 'center' }}
 									icon="arrow-down-alt2"
 									onClick={() => {
-										this.props.posts.splice(i + 1, 0, this.props.posts.splice(i, 1)[0]);
+										this.props.posts.splice(i + 1, 0, this.props.posts.splice(i, 1)[ 0 ]);
 										this.props.onChange(this.props.posts);
 										this.setState({ state: this.state });
 									}}
@@ -243,16 +251,16 @@ class PostSelector extends Component {
 
 				{showSuggestions &&
 					!!posts.length && (
-						<Popover position="bottom" noArrow focusOnMount={false}>
-							<div className="editor-url-input__suggestions" id={`editor-url-input-suggestions-${instanceId}`} ref={this.bindListNode} role="listbox">
-								{posts.map((post, index) => (
-									<button key={post.id} role="option" tabIndex="-1" id={`editor-url-input-suggestion-${instanceId}-${index}`} ref={this.bindSuggestionNode(index)} className={`editor-url-input__suggestion ${index === selectedSuggestion ? 'is-selected' : ''}`} onClick={() => this.selectLink(post)} aria-selected={index === selectedSuggestion}>
-										{decodeEntities(post.title) || '(no title)'}
-									</button>
-								))}
-							</div>
-						</Popover>
-					)}
+					<Popover position="bottom" noArrow focusOnMount={false}>
+						<div className="editor-url-input__suggestions" id={`editor-url-input-suggestions-${instanceId}`} ref={this.bindListNode} role="listbox">
+							{posts.map((post, index) => (
+								<button key={post.id} role="option" tabIndex="-1" id={`editor-url-input-suggestion-${instanceId}-${index}`} ref={this.bindSuggestionNode(index)} className={`editor-url-input__suggestion ${index === selectedSuggestion ? 'is-selected' : ''}`} onClick={() => this.selectLink(post)} aria-selected={index === selectedSuggestion}>
+									{decodeEntities(post.title) || '(no title)'}
+								</button>
+							))}
+						</div>
+					</Popover>
+				)}
 			</Fragment>
 		);
 		/* eslint-enable jsx-a11y/no-autofocus */
