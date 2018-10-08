@@ -21,7 +21,7 @@ export const name = 'core/latest-events';
 registerBlockType( 'milieux-blocks/events', {
 	title: __( 'Events' ),
 	description: __( 'Add a list of recent events and a highlighted one' ),
-	icon: 'grid-view',
+	icon: 'calendar-alt',
 	category: 'milieux-blocks',
 	keywords: [
 		__( 'events' ),
