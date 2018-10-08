@@ -1,7 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400');
+
 @import 'scss/media';
 @import 'scss/variables';
 @import 'scss/functions';
 
 @mixin font-size($font-size) {
   font-size: ($font-size / $font-s-base)*1rem;
+}
+
+%mlx-block {
+  width: 100%;
+  background: #fdfdfd;
+	border-radius: 4px;
+	padding: u(2);
+}
+
+// styles
+.section-title {
+	font-weight: $font-w-bold;
+	font-family: $font-sans-serif;
+}
+
+// utilities
+.t-up {
+	text-transform: uppercase;
 }

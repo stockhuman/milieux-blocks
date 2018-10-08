@@ -2,28 +2,15 @@
 
 // setup
 .wp-block-milieux-blocks-events {
-	width: 100%;
-	background: #f7f9fe;
-	border-radius: 4px;
-	padding: u();
+	@extend %mlx-block;
 }
 
 [data-type="milieux-blocks/events"] {
 	max-width: 100% !important;
 }
 
-// utility
-.t-up {
-	text-transform: uppercase;
-}
-
-.section-title {
-	font-weight: $font-w-bold;
-	font-family: $font-sans-serif;
-}
-
 // main
-.mlx-features {
+.mlx-events {
 	@at-root #{&}__items {
 		.entry-title a {
 			color: #555;
@@ -33,13 +20,8 @@
 	}
 }
 
-.mlx-featured-feature {
+.mlx-main-event {
 	display: grid;
 	grid-template-columns: 50% 50%;
 	grid-gap: 1em;
-}
-
-.post-list-item:hover {
-	background: #f7f7f7;
-	cursor: pointer;
 }
