@@ -1,3 +1,5 @@
+// Custom implementation of post selector with added responses for featured images
+
 const { Component, Fragment } = wp.element;
 const { decodeEntities } = wp.htmlEntities;
 const { UP, DOWN, ENTER } = wp.keycodes;
@@ -77,6 +79,8 @@ class PostSelector extends Component {
 				search: value,
 				per_page: 20,
 				type: 'post',
+				// Optionally add post subtype to search, via https://stackoverflow.com/questions/11704267/
+				...(this.props.subtype !== '' && { subtype: this.props.subtype }),
 			}),
 		});
 
@@ -153,7 +157,6 @@ class PostSelector extends Component {
 		apiFetch({
 			path: `/wp/v2/${post.subtype}s/${post.id}`,
 		}).then(response => {
-			console.log('response{} =>', response)
 			const author = {
 				byline: response.bylines,
 				postAuthor: response.author,
@@ -166,7 +169,6 @@ class PostSelector extends Component {
 				author: author,
 				url: response.link,
 			}
-			console.log('fullpost{} =>', fullpost)
 			// send data to the block;
 			this.props.onPostSelect(fullpost)
 		});
