@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
     _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
@@ -27,11 +28,19 @@
  * @param  {int} $multiplier: 1  int or string with math
  * @return {CSS unit}            $u global, multiplied by argument
  */
+.section-title {
+  font-weight: 700;
+  font-family: "Source Sans Pro", sans-serif; }
+
+.t-up {
+  text-transform: uppercase; }
+
 /**
  * #.# Styles
  *
  * CSS for both Frontend+Backend.
  */
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
     _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
@@ -61,6 +70,14 @@
  * @param  {int} $multiplier: 1  int or string with math
  * @return {CSS unit}            $u global, multiplied by argument
  */
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
+.section-title {
+  font-weight: 700;
+  font-family: "Source Sans Pro", sans-serif; }
+
+.t-up {
+  text-transform: uppercase; }
+
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
     _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
@@ -90,6 +107,13 @@
  * @param  {int} $multiplier: 1  int or string with math
  * @return {CSS unit}            $u global, multiplied by argument
  */
+.section-title {
+  font-weight: 700;
+  font-family: "Source Sans Pro", sans-serif; }
+
+.t-up {
+  text-transform: uppercase; }
+
 .mlx-block-features {
   background: #151515; }
   .mlx-block-features .page-type-title {
@@ -107,10 +131,12 @@
       grid-template-columns: 40% 1fr;
       grid-gap: 2rem; }
       .mlx-block-features .featured__inner a {
-        text-decoration: none; }
+        text-decoration: none;
+        max-width: 740px; }
       .mlx-block-features .featured__inner h2 {
         color: #FFFFFF;
-        text-transform: uppercase; }
+        text-transform: uppercase;
+        padding: 0 2rem 0 0; }
     .mlx-block-features .featured .featured__image-container {
       position: relative;
       height: 0;
@@ -220,6 +246,7 @@
     display: block;
     font-size: 10px;
     padding-bottom: 2rem; }
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
     _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
@@ -249,6 +276,14 @@
  * @param  {int} $multiplier: 1  int or string with math
  * @return {CSS unit}            $u global, multiplied by argument
  */
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
+.section-title {
+  font-weight: 700;
+  font-family: "Source Sans Pro", sans-serif; }
+
+.t-up {
+  text-transform: uppercase; }
+
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
     _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
@@ -278,6 +313,13 @@
  * @param  {int} $multiplier: 1  int or string with math
  * @return {CSS unit}            $u global, multiplied by argument
  */
+.section-title {
+  font-weight: 700;
+  font-family: "Source Sans Pro", sans-serif; }
+
+.t-up {
+  text-transform: uppercase; }
+
 .mlx-block-features {
   background: #151515; }
   .mlx-block-features .page-type-title {

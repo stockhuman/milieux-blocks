@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
     _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
@@ -27,6 +28,13 @@
  * @param  {int} $multiplier: 1  int or string with math
  * @return {CSS unit}            $u global, multiplied by argument
  */
+.section-title {
+  font-weight: 700;
+  font-family: "Source Sans Pro", sans-serif; }
+
+.t-up {
+  text-transform: uppercase; }
+
 /**
  * #.# Editor Styles
  *
@@ -58,6 +66,7 @@
 
 [data-type="mlx/block-hero"] {
   max-width: 100% !important; }
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
     _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
@@ -87,6 +96,20 @@
  * @param  {int} $multiplier: 1  int or string with math
  * @return {CSS unit}            $u global, multiplied by argument
  */
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
+.wp-block-milieux-blocks-features {
+  width: 100%;
+  background: #fdfdfd;
+  border-radius: 4px;
+  padding: 2rem; }
+
+.section-title, .ff__title {
+  font-weight: 700;
+  font-family: "Source Sans Pro", sans-serif; }
+
+.t-up {
+  text-transform: uppercase; }
+
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
     _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
@@ -118,19 +141,19 @@
  */
 .wp-block-milieux-blocks-features {
   width: 100%;
-  background: #f7f9fe;
+  background: #fdfdfd;
   border-radius: 4px;
-  padding: 1rem; }
+  padding: 2rem; }
 
-[data-type="milieux-blocks/features"] {
-  max-width: 100% !important; }
+.section-title, .ff__title {
+  font-weight: 700;
+  font-family: "Source Sans Pro", sans-serif; }
 
 .t-up {
   text-transform: uppercase; }
 
-.section-title {
-  font-weight: 700;
-  font-family: "Source Sans Pro", sans-serif; }
+[data-type="milieux-blocks/features"] {
+  max-width: 100% !important; }
 
 .mlx-features__items .entry-title a {
   color: #555;
@@ -140,11 +163,26 @@
 .mlx-featured-feature {
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-gap: 1em; }
+  grid-gap: 1rem;
+  margin-bottom: 2rem;
+  grid-column: 1 / span 2; }
 
 .post-list-item:hover {
   background: #f7f7f7;
   cursor: pointer; }
+
+.ff__title {
+  line-height: 1.3;
+  font-size: 22px; }
+
+.mlx-features__items {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 1rem; }
+  .mlx-features__items article .entry-title {
+    margin: 0;
+    line-height: 1.2; }
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
     _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
@@ -174,6 +212,20 @@
  * @param  {int} $multiplier: 1  int or string with math
  * @return {CSS unit}            $u global, multiplied by argument
  */
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
+.wp-block-milieux-blocks-events {
+  width: 100%;
+  background: #fdfdfd;
+  border-radius: 4px;
+  padding: 2rem; }
+
+.section-title {
+  font-weight: 700;
+  font-family: "Source Sans Pro", sans-serif; }
+
+.t-up {
+  text-transform: uppercase; }
+
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
     _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
@@ -205,33 +257,30 @@
  */
 .wp-block-milieux-blocks-events {
   width: 100%;
-  background: #f7f9fe;
+  background: #fdfdfd;
   border-radius: 4px;
-  padding: 1rem; }
-
-[data-type="milieux-blocks/events"] {
-  max-width: 100% !important; }
-
-.t-up {
-  text-transform: uppercase; }
+  padding: 2rem; }
 
 .section-title {
   font-weight: 700;
   font-family: "Source Sans Pro", sans-serif; }
 
-.mlx-features__items .entry-title a {
+.t-up {
+  text-transform: uppercase; }
+
+[data-type="milieux-blocks/events"] {
+  max-width: 100% !important; }
+
+.mlx-events__items .entry-title a {
   color: #555;
   font-family: "Source Sans Pro", sans-serif;
   text-decoration: none; }
 
-.mlx-featured-feature {
+.mlx-main-event {
   display: grid;
   grid-template-columns: 50% 50%;
   grid-gap: 1em; }
-
-.post-list-item:hover {
-  background: #f7f7f7;
-  cursor: pointer; }
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
     _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
@@ -261,5 +310,12 @@
  * @param  {int} $multiplier: 1  int or string with math
  * @return {CSS unit}            $u global, multiplied by argument
  */
+.section-title {
+  font-weight: 700;
+  font-family: "Source Sans Pro", sans-serif; }
+
+.t-up {
+  text-transform: uppercase; }
+
 .editor-url-input__suggestion {
   padding-bottom: 4px; }
