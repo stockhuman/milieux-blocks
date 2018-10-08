@@ -21,7 +21,7 @@ export const name = 'core/latest-posts';
 registerBlockType( 'milieux-blocks/features', {
 	title: __( 'Features' ),
 	description: __( 'Add a grid or list of customizable posts to your page.' ),
-	icon: 'grid-view',
+	icon: 'format-aside',
 	category: 'milieux-blocks',
 	keywords: [
 		__( 'features' ),
