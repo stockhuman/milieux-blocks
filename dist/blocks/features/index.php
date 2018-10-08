@@ -387,12 +387,17 @@ function milieux_blocks_get_author_info( $object, $field_name, $request ) {
 	$post_author = (int) $object['author'];
 
 	$array_data = array();
-	// $array_data['login'] = get_the_author_meta('login');
-	// $array_data['email'] = get_the_author_meta('email');
+	$array_data['link'] = get_the_author($object['id']);
 	$array_data['user_nicename'] = get_the_author_meta('user_nicename');
-	$array_data['first_name'] = get_user_meta($post_author, 'first_name', true);
-	$array_data['last_name'] = get_user_meta($post_author, 'last_name', true);
 	$array_data['nickname'] = get_user_meta($post_author, 'nickname', true);
+	$array_data['term_list'] = get_the_term_list($post_author, 'byline', '', ', ', '');
 
 	return array_filter($array_data);
+
+	// // $array_data['login'] = get_the_author_meta('login');
+	// // $array_data['email'] = get_the_author_meta('email');
+	//
+	// $array_data['first_name'] = get_user_meta($post_author, 'first_name', true);
+	// $array_data['last_name'] = get_user_meta($post_author, 'last_name', true);
+	//
 }
