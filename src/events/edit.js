@@ -19,10 +19,8 @@ const {
 	Placeholder,
 	QueryControls,
 	RangeControl,
-	SelectControl,
 	Spinner,
 	ToggleControl,
-	Toolbar,
 	BaseControl,
 } = wp.components;
 
@@ -85,7 +83,6 @@ class LatestPostsBlock extends Component {
 			displayPostImage,
 			displayPostLink,
 			mainEvent,
-			imageCrop,
 			order,
 			orderBy,
 			postLayout,
@@ -106,6 +103,8 @@ class LatestPostsBlock extends Component {
 						label="Select or update the featured event">
 						<PostSelector
 							posts={[]}
+							subtype="event"
+							keys={['acf']} // request acf response
 							onPostSelect={post => {
 								setAttributes({ mainEvent: post })
 								console.log(post)
@@ -149,14 +148,6 @@ class LatestPostsBlock extends Component {
 						checked={ displayPostImage }
 						onChange={ this.toggleDisplayPostImage }
 					/>
-					{ displayPostImage &&
-						<SelectControl
-							label={ __( 'Featured Image Style' ) }
-							options={ imageCropOptions }
-							value={ imageCrop }
-							onChange={ ( value ) => this.props.setAttributes( { imageCrop: value } ) }
-						/>
-					}
 					<ToggleControl
 						label={ __( 'Display Post Excerpt' ) }
 						checked={ displayPostExcerpt }
@@ -189,21 +180,6 @@ class LatestPostsBlock extends Component {
 			latestPosts.slice( 0, postsToShow ) :
 			latestPosts;
 
-		const layoutControls = [
-			{
-				icon: 'grid-view',
-				title: __( 'Grid View' ),
-				onClick: () => setAttributes( { postLayout: 'grid' } ),
-				isActive: postLayout === 'grid',
-			},
-			{
-				icon: 'list-view',
-				title: __( 'List View' ),
-				onClick: () => setAttributes( { postLayout: 'list' } ),
-				isActive: postLayout === 'list',
-			},
-		];
-
 		return (
 			<Fragment>
 				{ inspectorControls }
@@ -215,14 +191,8 @@ class LatestPostsBlock extends Component {
 						} }
 						controls={ [ 'center', 'wide' ] }
 					/>
-					<Toolbar controls={ layoutControls } />
 				</BlockControls>
-				<div
-					className={ classnames(
-						this.props.className,
-						'mlx-events',
-					) }
-				>
+				<div className={ classnames( this.props.className, 'mlx-events', ) } >
 					<div
 						className={ classnames( {
 							'is-grid': postLayout === 'grid',
@@ -243,9 +213,9 @@ class LatestPostsBlock extends Component {
 										alt={mainEvent.image.alt_text || __('(Untitled)')}
 									/>
 								) : (
-								 	null
-								 )
-							 	}
+									null
+								)
+								}
 								<div className="mlx-main-event__meta">
 									<h2 className="main-event__title">{mainEvent.title || __('(Untitled)')}</h2>
 								</div>
@@ -294,6 +264,7 @@ class LatestPostsBlock extends Component {
 }
 
 export default withSelect( ( select, props ) => {
+	console.log(props.attributes)
 	const { postsToShow, order, orderBy, categories } = props.attributes;
 	const { getEntityRecords } = select( 'core' );
 	const latestPostsQuery = pickBy( {
