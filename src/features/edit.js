@@ -129,16 +129,14 @@ class LatestPostsBlock extends Component {
 						label="Select or update the featured post">
 						<PostSelector
 							posts={[]}
+							subtype="feature"
 							onPostSelect={post => {
 								setAttributes({
 									featuredPost: post,
-									fp: JSON.stringify(post),
 								})
 							}}
 							onChange={newValue => {
-								console.log(newValue)
 								setAttributes({ featuredPost: {...newValue} })
-								console.log('onChange() => ', featuredPost)
 							}}
 						/>
 					</BaseControl>
@@ -279,19 +277,19 @@ class LatestPostsBlock extends Component {
 							<div className="mlx-featured-feature"
 								hasImage={featuredPost.image !== null ? true : false}
 							>
-								{/* {this.hasImage ? ( */}
-								<img
-									className="mlx-featured-feature__image"
-									src={featuredPost.image.source_url}
-									alt={featuredPost.image.alt_text || __('(Untitled)')}
-								/>
-								{/* ) : (
+								{this.hasImage ? (
+									<img
+										className="mlx-featured-feature__image"
+										src={featuredPost.image.source_url || ''}
+										alt={featuredPost.image.alt_text || __('(Untitled)')}
+									/>
+								) : (
 									null
 								)
-								} */}
+								}
 								<div className="mlx-featured-feature__meta">
 									<h1 className="ff__title">{featuredPost.title || __('(Untitled)')}</h1>
-									{/* <p className="ff__byline">{ __('by') + featuredPost.author.status }</p> */}
+									<p className="ff__byline">{ `${__('by')} ${featuredPost.author.link || ''}` }</p>
 								</div>
 							</div>
 						}
