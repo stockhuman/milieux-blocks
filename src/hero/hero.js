@@ -14,8 +14,6 @@ const { registerBlockType } = wp.blocks
 
 // see https://github.com/WordPress/gutenberg/tree/master/packages/components/
 const {
-	Placeholder,
-	FormFileUpload,
 	Button,
 	PanelBody,
 	UrlInput,
@@ -24,12 +22,8 @@ const {
 const {
 	MediaPlaceholder,
 	MediaUpload,
-
 	RichText,
-
 	InspectorControls,
-	ColorPalette,
-	PanelColor,
 	PanelColorSettings,
 } = wp.editor
 
@@ -49,7 +43,7 @@ const {
 registerBlockType( 'milieux-blocks/hero', {
 	title: __( 'Page Hero' ), // Block title.
 	description: 'Showcase a featured post, event or similar with an eye-catching banner',
-	icon: 'shield',
+	icon: 'shield-alt',
 	category: 'milieux-blocks',
 	keywords: [
 		__( 'Hero' ),
