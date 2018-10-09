@@ -1,210 +1,113 @@
-@import '../common';
+@import '../common.scss';
 
-// for milieux blocks - move when ready
-$mlx-evenst__total-columns: 2;
-
-.mlx-block-features {
-	background: $gray-darker;
-
-			// ovveride to a style provided by the milieux theme
-		.page-type-title {
-			color: rgba($white, 0.22);
-			max-width: 1400px;
-			margin: u() auto;
-			text-transform: uppercase;
-			letter-spacing: 0.01px;
-			padding: u(3);
-		}
-
-	// The featured post
-	.featured {
-		margin-top: u(2);
-		margin-bottom: u(4);
-
-
-		@at-root #{&}__inner {
-			display: grid;
-			grid-template-columns: 40% 1fr;
-			grid-gap: u(2);
-
-			a {
-				text-decoration: none;
-			}
-
-			h2 {
-				color: $white;
-				text-transform: uppercase;
-
-			}
-		}
-
-
-		.featured__image-container {
-			position: relative;
-			height: 0;
-			display: block;
-			width: 100%;
-
-
-			/* padding-bottom is calculated and rendered in to HTML */
-
-			img {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				display: block;
-			}
-		}
-	}
-
+// main
+.mlx-events {
+	@extend %mlx-block;
+	padding: 0;
 
 	@at-root #{&}__container {
-		padding: u();
-		max-width: 1400px;
-		margin: 0 auto;
-		@include media('>tablet') { & {
-			padding: u(2);
-		}}
 
-		@include media('>desktop') { & {
-
-		}}
-
-		&.is-grid {
+		&.has-main-event {
 			display: grid;
-			flex-wrap: wrap;
-			grid-gap: u();
+			grid-template-columns: 60% 40%;
 		}
-		// @for $i from 0 through $mlx-features__total-columns {
-		// 	&.columns-#{$i} {
-		// 		grid-template-columns: repeat(#{$i}, 1fr);
-		// 		@include media('<1000px') { & {
-		// 			display: block;
-		// 		}}
-		// 	}
-		// }
 
-		// the article proper
-		article {
-			display: inline-grid;
-			@include media('>tablet') { & {
-				grid-template-columns: 1fr 1fr;
-			}}
-
-			@include media('>desktop') { & {
-
-			}}
-
-
+		.entry-title {
+			line-height: 1.2;
+			font-size: 16px;
+			font-family: $font-sans-serif;
+			font-weight: $font-w-normal;
+			margin: 0;
+			padding-top: 0;
+			a {
+				color: $black;
+				text-decoration: none;
+			}
 		}
 	}
 
-	@at-root #{&}__image {
-		overflow: hidden;
-		background: $gray-darker;
-		margin: u();
-		img {
-			transform: scale(1.05);
-			transition:
-				opacity .3s cubic-bezier(.215,.61,.355,1),
-				transform .5s cubic-bezier(.215,.61,.355,1);
-			&:hover {
-				opacity: 0.7;
-				transform: scale(1);
+	@at-root #{&}__items {
+		padding: u(3) u(4);
+		.page-type-title {
+			text-transform: uppercase;
+			padding-top: 0;
+			opacity: 0.5;
+		}
+
+		article {
+			display: flex;
+			margin-bottom: u(2);
+			.mlx-events__date {
+				font-size: 12px;
 			}
 		}
+	}
+	@at-root #{&}__day {
+		font-size: $font-sans-serif;
+		font-size: 34px;
+		padding: 0 u(0.5);
+		position: relative;
+		top: -10px; // magic numbers
 	}
 
 	@at-root #{&}__text {
-		color: $white;
+		font-size: 12px;
+	}
+}
 
-		@include media('>tablet') { & {
-			padding: u()
-		}}
+.mlx-main-event {
+	position: relative;
 
-		@include media('>desktop') { & {
+	@at-root #{&}__image {
+		position: relative;
+		height: 100%;
+		display: block;
+		width: 100%;
+		// top: 0;
+		// bottom: 0;
+		/* padding-bottom is calculated and rendered in to HTML */
 
-		}}
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			display: block;
+			object-fit: cover;
+		}
+
+	}
+
+	@at-root #{&}__meta {
+		padding: u(2);
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		top: 0;
+		a {
+			text-decoration: none;
+		}
 	}
 
 	@at-root #{&}__title {
-		line-height: 20px;
-		padding-top: 0 !important;
-		margin-bottom: u();
-	}
-
-	@at-root #{&}__title a {
 		color: $white;
-		text-decoration: none;
-		font-family: $font-mono;
-		@include font-size(20);
-
-		@include media('>tablet') { & {
-
-		}}
-
-		@include media('>desktop') { & {
-
-		}}
-	}
-
-	@at-root #{&}__byline {
-		opacity: .7;
-	  transition: opacity .2s ease;
-	  &:hover {
-		  opacity: 1;
-    }
-
-		@include media('>tablet') { & {
-
-		}}
-
-		@include media('>desktop') { & {
-
-		}}
-	}
-
-	@at-root #{&}__excerpt {
-		color: $gray;
-		@include media('>tablet') { & {
-
-		}}
-
-		@include media('>desktop') { & {
-
-		}}
-	}
-
-	@at-root #{&}__link {
-		font-family: $font-mono;
-		color: $white;
-		opacity: 1;
-		display: block;
-		padding-top: u();
-		@include media('>tablet') { & {
-
-		}}
-
-		@include media('>desktop') { & {
-
-		}}
+		font-family: $font-sans-serif-bold;
+		text-transform: uppercase;
+		align-self: center;
 	}
 
 	@at-root #{&}__date {
-		font-family: $font-mono;
-		color: $white;
-		opacity: 1;
-		display: block;
-		font-size: 10px;
-		padding-bottom: u(2);
-		@include media('>tablet') { & {
-
-		}}
-
-		@include media('>desktop') { & {
-
-		}}
+		bottom: u();
+		right: u();
+		color: white;
+		position: absolute;
 	}
+}
+
+// Utility
+.mlx-t-number {
+	font-family: $font-number;
+	font-weight: 100;
 }

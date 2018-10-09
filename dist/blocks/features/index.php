@@ -1,6 +1,7 @@
 <?php
 /**
  * Server-side rendering for the post grid block
+ * TODO: refactor common functions out of this file
  *
  * @since 	1.1.7
  * @package Milieux Blocks
@@ -322,7 +323,7 @@ add_action( 'init', 'milieux_blocks_register_block_core_latest_posts' );
 function milieux_blocks_register_rest_fields() {
 	// Add landscape featured image source
 	register_rest_field(
-		'feature',
+		array('feature', 'event'),
 		'featured_image_src',
 		array(
 			'get_callback' => 'milieux_blocks_get_image_src_landscape',
@@ -333,7 +334,7 @@ function milieux_blocks_register_rest_fields() {
 
 	// Add square featured image source
 	register_rest_field(
-		'feature',
+		array('feature', 'event'),
 		'featured_image_src_square',
 		array(
 			'get_callback' => 'milieux_blocks_get_image_src_square',

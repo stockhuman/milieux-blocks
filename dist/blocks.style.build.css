@@ -280,6 +280,12 @@
  * @return {CSS unit}            $u global, multiplied by argument
  */
 @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
+.mlx-events {
+  width: 100%;
+  background: #fdfdfd;
+  border-radius: 4px;
+  padding: 2rem; }
+
 .section-title {
   font-weight: 900;
   font-family: "Roboto", sans-serif;
@@ -317,6 +323,12 @@
  * @param  {int} $multiplier: 1  int or string with math
  * @return {CSS unit}            $u global, multiplied by argument
  */
+.mlx-events {
+  width: 100%;
+  background: #fdfdfd;
+  border-radius: 4px;
+  padding: 2rem; }
+
 .section-title {
   font-weight: 900;
   font-family: "Roboto", sans-serif;
@@ -325,108 +337,81 @@
 .t-up {
   text-transform: uppercase; }
 
-.mlx-block-features {
-  background: #151515; }
-  .mlx-block-features .page-type-title {
-    color: rgba(255, 255, 255, 0.22);
-    max-width: 1400px;
-    margin: 1rem auto;
-    text-transform: uppercase;
-    letter-spacing: 0.01px;
-    padding: 3rem; }
-  .mlx-block-features .featured {
-    margin-top: 2rem;
-    margin-bottom: 4rem; }
-    .mlx-block-features .featured__inner {
-      display: grid;
-      grid-template-columns: 40% 1fr;
-      grid-gap: 2rem; }
-      .mlx-block-features .featured__inner a {
-        text-decoration: none; }
-      .mlx-block-features .featured__inner h2 {
-        color: #FFFFFF;
-        text-transform: uppercase; }
-    .mlx-block-features .featured .featured__image-container {
-      position: relative;
-      height: 0;
-      display: block;
+.mlx-events {
+  padding: 0; }
+  .mlx-events__container.has-main-event {
+    display: grid;
+    grid-template-columns: 60% 40%; }
+  .mlx-events__container .entry-title {
+    line-height: 1.2;
+    font-size: 16px;
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding-top: 0; }
+    .mlx-events__container .entry-title a {
+      color: #000000;
+      text-decoration: none; }
+  .mlx-events__items {
+    padding: 3rem 4rem; }
+    .mlx-events__items .page-type-title {
+      text-transform: uppercase;
+      padding-top: 0;
+      opacity: 0.5; }
+    .mlx-events__items article {
+      display: -ms-flexbox;
+      display: flex;
+      margin-bottom: 2rem; }
+      .mlx-events__items article .mlx-events__date {
+        font-size: 12px; }
+  .mlx-events__day {
+    font-size: "Source Sans Pro", sans-serif;
+    font-size: 34px;
+    padding: 0 0.5rem;
+    position: relative;
+    top: -10px; }
+  .mlx-events__text {
+    font-size: 12px; }
+
+.mlx-main-event {
+  position: relative; }
+  .mlx-main-event__image {
+    position: relative;
+    height: 100%;
+    display: block;
+    width: 100%;
+    /* padding-bottom is calculated and rendered in to HTML */ }
+    .mlx-main-event__image img {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      /* padding-bottom is calculated and rendered in to HTML */ }
-      .mlx-block-features .featured .featured__image-container img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: block; }
-  .mlx-block-features__container {
-    padding: 1rem;
-    max-width: 1400px;
-    margin: 0 auto; }
-    @media (min-width: 769px) {
-      .mlx-block-features__container {
-        padding: 2rem; } }
-    .mlx-block-features__container.is-grid {
-      display: grid;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-      grid-gap: 1rem; }
-    .mlx-block-features__container article {
-      display: inline-grid; }
-      @media (min-width: 769px) {
-        .mlx-block-features__container article {
-          grid-template-columns: 1fr 1fr; } }
-  .mlx-block-features__image {
-    overflow: hidden;
-    background: #151515;
-    margin: 1rem; }
-    .mlx-block-features__image img {
-      -webkit-transform: scale(1.05);
-          -ms-transform: scale(1.05);
-              transform: scale(1.05);
-      -webkit-transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), -webkit-transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-      transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), -webkit-transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-      -o-transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-      transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-      transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1), -webkit-transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1); }
-      .mlx-block-features__image img:hover {
-        opacity: 0.7;
-        -webkit-transform: scale(1);
-            -ms-transform: scale(1);
-                transform: scale(1); }
-  .mlx-block-features__text {
-    color: #FFFFFF; }
-    @media (min-width: 769px) {
-      .mlx-block-features__text {
-        padding: 1rem; } }
-  .mlx-block-features__title {
-    line-height: 20px;
-    padding-top: 0 !important;
-    margin-bottom: 1rem; }
-  .mlx-block-features__title a {
+      height: 100%;
+      display: block;
+      -o-object-fit: cover;
+         object-fit: cover; }
+  .mlx-main-event__meta {
+    padding: 2rem;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    top: 0; }
+    .mlx-main-event__meta a {
+      text-decoration: none; }
+  .mlx-main-event__title {
     color: #FFFFFF;
-    text-decoration: none;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 1.25rem; }
-  .mlx-block-features__byline {
-    opacity: .7;
-    -webkit-transition: opacity .2s ease;
-    -o-transition: opacity .2s ease;
-    transition: opacity .2s ease; }
-    .mlx-block-features__byline:hover {
-      opacity: 1; }
-  .mlx-block-features__excerpt {
-    color: #AFAFAF; }
-  .mlx-block-features__link {
-    font-family: "IBM Plex Mono", monospace;
-    color: #FFFFFF;
-    opacity: 1;
-    display: block;
-    padding-top: 1rem; }
-  .mlx-block-features__date {
-    font-family: "IBM Plex Mono", monospace;
-    color: #FFFFFF;
-    opacity: 1;
-    display: block;
-    font-size: 10px;
-    padding-bottom: 2rem; }
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    -ms-flex-item-align: center;
+        align-self: center; }
+  .mlx-main-event__date {
+    bottom: 1rem;
+    right: 1rem;
+    color: white;
+    position: absolute; }
+
+.mlx-t-number {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100; }

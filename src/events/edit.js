@@ -179,7 +179,6 @@ class LatestPostsBlock extends Component {
 					} else {
 						out += `, ${moment(d.event_dates_date, 'YYYYMMDD').local().format('DD')} `
 					}
-					console.log(out)
 					// So as to build something like "August 06, 08 and September 03"
 				})
 				return m + out
@@ -222,7 +221,7 @@ class LatestPostsBlock extends Component {
 								}
 								<div className="mlx-main-event__meta">
 									<h2 className="mlx-main-event__title">{mainEvent.title || __('(Untitled)')}</h2>
-									<div className="mlx-main-event__date mlx-t-number">{eventDate(mainEvent, 'MMMM', 'DD')}</div>
+									<div className="mlx-main-event__date mlx-t-number">{ eventDate(mainEvent, 'MMMM', 'DD') }</div>
 								</div>
 							</div>
 						}

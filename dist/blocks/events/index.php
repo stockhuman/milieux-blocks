@@ -8,15 +8,6 @@
  * @package Milieux Blocks
  */
 
-/**
- * returns image aspect ratio, so to set padding and eliminate page reflows
- * @param  [type] $ID [description]
- * @return string     integer value representing the % height
- */
-function _mlx__get_image_ratio_padding ($ID) {
-	$meta = wp_get_attachment_metadata($ID);
-	return ($meta['sizes']['medium']['height'] / $meta['sizes']['medium']['width']) * 100;
-}
 
 /**
  * Renders the post grid block on server.
@@ -25,7 +16,7 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 	$recent_posts = wp_get_recent_posts( array(
 		'numberposts' => $attributes['postsToShow'],
 		'post_status' => 'publish',
-		'post_type' => 'feature',
+		'post_type' => 'event',
 		'order' => $attributes['order'],
 		'orderby' => $attributes['orderBy'],
 		'category' => $attributes['categories'],
@@ -43,7 +34,8 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 		$fp_img = $mainEvent['image'];
 
 		$main_event_markup .= sprintf(
-			'<div class="mlx-block-events main-event"><div class="main-event__inner">'
+			'<div class="mlx-events__container %1$s"><div class="mlx-main-event">',
+			($attributes['displayMainEvent'] == true) ? 'has-main-event' : ''
 		);
 
 		$main_event_markup .= sprintf(
@@ -52,7 +44,7 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 		);
 
 		$main_event_markup .= sprintf(
-			'<div class="main-event__image-container" style="padding-bottom:%1$s%%">',
+			'<div class="mlx-main-event__image" style="padding-bottom:%1$s%%">',
 			_mlx__get_image_ratio_padding ($fp_img['id'])
 		);
 
@@ -67,11 +59,22 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 		);
 
 		$main_event_markup .= sprintf(
-			'data-sizes="auto" alt="%1$s"></div><a href="%2$s"><h2>%3$s</h2></a></div></div>', // close main-event div
-			$fp_img['alt_text'],
+			'data-sizes="auto" alt="%1$s"></div>',
+			$fp_img['alt_text']
+		);
+
+		// Add title and open meta section
+		$main_event_markup .= sprintf(
+			'<div class="mlx-main-event__meta"><a href="%1$s"><h2 class="mlx-main-event__title">%2$s</h2></a>',
 			esc_html($mainEvent['url']),
 			esc_html($mainEvent['title'])
 		);
+
+		$main_event_markup .= sprintf(
+			'<div class="mlx-main-event__date mlx-t-number"></div>'
+		);
+
+		$main_event_markup .= sprintf( '</div></div>'); // close main event div
 	}
 
 
@@ -97,20 +100,20 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 				esc_attr( $post_thumb_class )
 			);
 
-			// Get the main-event image
-			if ( isset( $attributes['displayPostImage'] ) && $attributes['displayPostImage'] && $post_thumb_id ) {
-				if( $attributes['imageCrop'] === 'landscape' ) {
-					$post_thumb_size = 'landscape-large';
-				} else {
-					$post_thumb_size = 'square-large'; // was medium
-				}
+			// // Get the main-event image
+			// if ( isset( $attributes['displayPostImage'] ) && $attributes['displayPostImage'] && $post_thumb_id ) {
+			// 	if( $attributes['imageCrop'] === 'landscape' ) {
+			// 		$post_thumb_size = 'landscape-large';
+			// 	} else {
+			// 		$post_thumb_size = 'square-large'; // was medium
+			// 	}
 
-				$list_items_markup .= sprintf(
-					'<div class="mlx-block-events__image"><a href="%1$s" rel="bookmark">%2$s</a></div>',
-					esc_url( get_permalink( $post_id ) ),
-					wp_get_attachment_image( $post_thumb_id, $post_thumb_size )
-				);
-			}
+			// 	$list_items_markup .= sprintf(
+			// 		'<div class="mlx-block-events__image"><a href="%1$s" rel="bookmark">%2$s</a></div>',
+			// 		esc_url( get_permalink( $post_id ) ),
+			// 		wp_get_attachment_image( $post_thumb_id, $post_thumb_size )
+			// 	);
+			// }
 
 			// Wrap the text content
 			$list_items_markup .= sprintf(
@@ -125,42 +128,20 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 				}
 
 				$list_items_markup .= sprintf(
-					'<h2 class="mlx-block-events__title"><a href="%1$s" rel="bookmark">%2$s</a></h2>',
+					'<h2 class="mlx-events__title entry-title"><a href="%1$s" rel="bookmark">%2$s</a></h2>',
 					esc_url( get_permalink( $post_id ) ),
 					esc_html( $title )
 				);
 
-				// Wrap the byline content
 				$list_items_markup .= sprintf(
-					'<div class="mlx-block-events__byline">'
-				);
-
-					// Get the post author
-					if ( isset( $attributes['displayPostAuthor'] ) && $attributes['displayPostAuthor'] ) {
-						$list_items_markup .= sprintf(
-							'<div class="mlx-block-events__author"><a class="ab-text-link" href="%2$s">%1$s</a></div>',
-							esc_html( get_the_author_meta( 'display_name', $post->post_author ) ),
-							esc_html( get_author_posts_url( $post->post_author ) )
-						);
-					}
-
-					// Get the post date
-					if ( isset( $attributes['displayPostDate'] ) && $attributes['displayPostDate'] ) {
-						$list_items_markup .= sprintf(
-							'<time datetime="%1$s" class="mlx-block-events__date">%2$s</time>',
-							esc_attr( get_the_date( 'c', $post_id ) ),
-							esc_html( get_the_date( '', $post_id ) )
-						);
-					}
-
-				// Close the byline content
-				$list_items_markup .= sprintf(
-					'</div>'
+					'<time datetime="%1$s" class="mlx-events__date mlx-t-number">%2$s</time>',
+					esc_attr( get_the_date( 'c', $post_id ) ),
+					esc_html( get_the_date( '', $post_id ) )
 				);
 
 				// Wrap the excerpt content
 				$list_items_markup .= sprintf(
-					'<div class="mlx-block-events__excerpt">'
+					'<div class="mlx-events__excerpt">'
 				);
 
 					// Get the excerpt
@@ -176,14 +157,6 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 
 					if ( isset( $attributes['displayPostExcerpt'] ) && $attributes['displayPostExcerpt'] ) {
 						$list_items_markup .=  wp_kses_post( $excerpt );
-					}
-
-					if ( isset( $attributes['displayPostLink'] ) && $attributes['displayPostLink'] ) {
-						$list_items_markup .= sprintf(
-							'<p><a class="mlx-block-events__link" href="%1$s" rel="bookmark">%2$s</a></p>',
-							esc_url( get_permalink( $post_id ) ),
-							esc_html__( 'Continue Reading', 'milieux-blocks' )
-						);
 					}
 
 				// Close the excerpt content
@@ -202,13 +175,13 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 	}
 
 	// Build the classes
-	$class = "mlx-block-events align{$attributes['align']}";
+	$class = "mlx-events align{$attributes['align']}";
 
 	if ( isset( $attributes['className'] ) ) {
 		$class .= ' ' . $attributes['className'];
 	}
 
-	$grid_class = 'mlx-block-events__container';
+	$grid_class = 'mlx-events__items';
 
 	if ( isset( $attributes['postLayout'] ) && 'list' === $attributes['postLayout'] ) {
 		$grid_class .= ' is-list';
@@ -222,7 +195,7 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 
 	// Output the post markup
 	$block_content = sprintf(
-		'<div class="%1$s"><h3 class="page-type-title">Features</h3>%2$s<div class="%3$s">%4$s</div></div>',
+		'<div class="%1$s">%2$s<div class="%3$s"><h3 class="page-type-title">Events</h3>%4$s</div></div>',
 		esc_attr( $class ),
 		$main_event_markup,
 		esc_attr( $grid_class ),
@@ -304,83 +277,3 @@ function milieux_blocks_register_block_core_latest_events() {
 }
 
 add_action( 'init', 'milieux_blocks_register_block_core_latest_events' );
-
-
-/**
- * Create API fields for additional info
- */
-function milieux_blocks_register_rest_fields() {
-	// Add landscape main-event image source
-	register_rest_field(
-		'event',
-		'featured_image_src',
-		array(
-			'get_callback' => 'milieux_blocks_get_image_src_landscape',
-			'update_callback' => null,
-			'schema' => null,
-		)
-	);
-
-	// Add square featured image source
-	register_rest_field(
-		'event',
-		'featured_image_src_square',
-		array(
-			'get_callback' => 'milieux_blocks_get_image_src_square',
-			'update_callback' => null,
-			'schema' => null,
-		)
-	);
-
-	// Add author info
-	register_rest_field(
-		'event',
-		'author',
-		array(
-			'get_callback' => 'milieux_blocks_get_author_info',
-			'update_callback' => null,
-			'schema' => null,
-		)
-	);
-}
-add_action( 'rest_api_init', 'milieux_blocks_register_rest_fields' );
-
-
-/**
- * Get landscape featured image source for the rest field
- */
-function milieux_blocks_get_image_src_landscape( $object, $field_name, $request ) {
-	$feat_img_array = wp_get_attachment_image_src(
-		$object['featured_media'],
-		'mlx-block-events__landscape',
-		false
-	);
-	return $feat_img_array[0];
-}
-
-/**
- * Get square featured image source for the rest field
- */
-function milieux_blocks_get_image_src_square( $object, $field_name, $request ) {
-	$feat_img_array = wp_get_attachment_image_src(
-		$object['featured_media'],
-		'mlx-block-events__square',
-		false
-	);
-	return $feat_img_array[0];
-}
-
-/**
- * Get author info for the rest field
- */
-function milieux_blocks_get_author_info( $object, $field_name, $request ) {
-	$post_author = (int) $object['author'];
-
-	$array_data = array();
-	$array_data['user_nicename'] = get_the_author_meta('user_nicename');
-	$array_data['first_name'] = get_user_meta($post_author, 'first_name', true);
-	$array_data['last_name'] = get_user_meta($post_author, 'last_name', true);
-	$array_data['nickname'] = get_user_meta($post_author, 'nickname', true);
-
-	return array_filter($array_data);
-}

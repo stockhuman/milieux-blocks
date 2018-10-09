@@ -90,6 +90,7 @@ function milieux_blocks_loader() {
 	add_image_size( 'square-large', 1024, 1024, true ); // used in the following code
 	add_image_size( 'landscape-medium', 1024, 576, true );
 	require_once plugin_dir_path( __FILE__ ) . 'dist/blocks/features/index.php';
+	require_once plugin_dir_path( __FILE__ ) . 'dist/blocks/events/index.php';
 }
 add_action( 'plugins_loaded', 'milieux_blocks_loader' );
 
