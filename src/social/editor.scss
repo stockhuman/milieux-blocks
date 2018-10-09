@@ -1,0 +1,40 @@
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+
+.wp-block-mlx-block-hero  {
+	height: 40vh;
+	min-height: 400px;
+	font-family: $font-sans-serif;
+	position: relative;
+	overflow: hidden;
+
+	.mlx-title__container {
+		position: absolute;
+		bottom: 2em;
+		left: 2em;
+		display: flex;
+
+		h2 {
+			padding-right: 1em;
+		}
+		svg {
+			width: 50px;
+		}
+	}
+
+	.overlay {
+		height: 40vh;
+		min-height: 400px;
+		position: absolute;
+		width: 100%;
+		border-radius: 3px;
+	}
+}
+
+[data-type="mlx/block-hero"] {
+	max-width: 100% !important;
+}
