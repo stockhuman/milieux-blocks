@@ -98,7 +98,6 @@ class LatestPostsBlock extends Component {
 							keys={['acf']} // request acf response
 							onPostSelect={post => {
 								setAttributes({ mainEvent: post })
-								console.log(post)
 							}}
 							onChange={newValue => {
 								setAttributes({ mainEvent: {...newValue} })
@@ -158,6 +157,9 @@ class LatestPostsBlock extends Component {
 		}
 
 		const eventDate = (event, month = 'MMMM', day = 'DD', full = false) => {
+			if (event.acf === undefined || null) {
+				return (null)
+			}
 			const e = event.acf
 			const date = moment(e.event_date, 'YYYYMMDD').local()
 			const type = e.event_type
@@ -213,9 +215,9 @@ class LatestPostsBlock extends Component {
 
 						{ hasMainEvent &&
 							<div className="mlx-main-event">
-								{ mainEvent.image.source_url &&
+								{ mainEvent.image &&
 									<div className="mlx-main-event__image"
-										style={{backgroundImage: `url(${mainEvent.image.source_url})`}}
+										style={{backgroundImage: `url(${mainEvent.image.source_url || null})`}}
 										data-title={mainEvent.image.title || __('Untitled')}
 									/>
 								}

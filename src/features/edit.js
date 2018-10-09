@@ -287,7 +287,7 @@ class LatestPostsBlock extends Component {
 								}
 								<div className="mlx-featured-feature__meta">
 									<h1 className="ff__title">{featuredPost.title || __('(Untitled)')}</h1>
-									<p className="ff__byline">{ `${__('by')} ${featuredPost.author.link || ''}` }</p>
+									{ featuredPost.author && <p className="ff__byline">{ `${__('by')} ${featuredPost.author.link || ''}` }</p> }
 								</div>
 							</div>
 						}
