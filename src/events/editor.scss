@@ -1,9 +1,5 @@
 @import '../common.scss';
 
-// setup
-.wp-block-milieux-blocks-events {
-	@extend %mlx-block;
-}
 
 [data-type="milieux-blocks/events"] {
 	max-width: 100% !important;
@@ -11,17 +7,90 @@
 
 // main
 .mlx-events {
-	@at-root #{&}__items {
-		.entry-title a {
-			color: #555;
-			font-family: $font-sans-serif;
-			text-decoration: none;
+	@extend %mlx-block;
+
+	@at-root #{&}__container {
+
+		&.has-main-event {
+			display: grid;
+			grid-template-columns: 40% 60%;
 		}
+
+		.entry-title {
+			line-height: 1.2;
+			font-size: 16px;
+			font-family: $font-sans-serif;
+			font-weight: $font-w-normal;
+			margin: 0;
+			a {
+				color: $black;
+				text-decoration: none;
+			}
+		}
+	}
+
+	@at-root #{&}__items {
+		padding: u();
+
+		article {
+			display: flex;
+			margin-bottom: u();
+			.mlx-events__date {
+				font-size: 12px;
+			}
+		}
+	}
+	@at-root #{&}__day {
+		font-size: $font-sans-serif;
+		font-size: 34px;
+		padding: 0 u(0.5);
+		position: relative;
+		top: -10px; // magic numbers
+	}
+
+	@at-root #{&}__text time {
+		font-size: 12px;
 	}
 }
 
 .mlx-main-event {
-	display: grid;
-	grid-template-columns: 50% 50%;
-	grid-gap: 1em;
+	position: relative;
+
+	@at-root #{&}__image {
+		background-size: cover;
+		background-position: center center;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		border-radius: 4px;
+	}
+
+	@at-root #{&}__meta {
+		padding: u();
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		display: flex;
+	}
+
+	@at-root #{&}__title {
+		color: $white;
+		font-family: $font-sans-serif-bold;
+		text-transform: uppercase;
+		align-self: center;
+	}
+
+	@at-root #{&}__date {
+		bottom: u();
+		right: u();
+		color: white;
+		position: absolute;
+	}
+}
+
+// Utility
+.mlx-t-number {
+	font-family: $font-number;
+	font-weight: 100;
 }

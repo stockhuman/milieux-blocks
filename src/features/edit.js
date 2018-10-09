@@ -274,10 +274,8 @@ class LatestPostsBlock extends Component {
 					>
 						<h2 className="section-title t-up">{ __('Features') }</h2>
 						{((featuredPost !== undefined) && displayFeaturedPost) &&
-							<div className="mlx-featured-feature"
-								hasImage={featuredPost.image !== null ? true : false}
-							>
-								{this.hasImage ? (
+							<div className="mlx-featured-feature">
+								{ featuredPost.image ? (
 									<img
 										className="mlx-featured-feature__image"
 										src={featuredPost.image.source_url || ''}
@@ -317,11 +315,11 @@ class LatestPostsBlock extends Component {
 								}
 
 								<div className="mlx-block-post-grid-text">
-									<h2 className="entry-title">
+									<h3 className="entry-title">
 										<a href={ post.link } target="_blank" rel="noopener noreferrer">
 											{ decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)' ) }
 										</a>
-									</h2>
+									</h3>
 
 									<div className="mlx-block-post-grid-byline">
 										{ displayPostAuthor && post.author_info &&

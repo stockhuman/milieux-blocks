@@ -13,25 +13,18 @@ const { Component, Fragment } = wp.element;
 const { __ } = wp.i18n;
 const { decodeEntities } = wp.htmlEntities;
 const { withSelect } = wp.data;
+const { InspectorControls } = wp.editor;
 
 const {
 	PanelBody,
 	Placeholder,
 	QueryControls,
-	RangeControl,
 	Spinner,
 	ToggleControl,
 	BaseControl,
 } = wp.components;
 
-const {
-	InspectorControls,
-	BlockAlignmentToolbar,
-	BlockControls,
-} = wp.editor;
-
-const MAX_POSTS_COLUMNS = 4;
-const MAX_EVENTS = 12;
+const MAX_EVENTS = 14;
 
 class LatestPostsBlock extends Component {
 	constructor() {
@@ -68,6 +61,7 @@ class LatestPostsBlock extends Component {
 		const { displayMainEvent } = this.props.attributes
 		const { setAttributes } = this.props
 
+		console.log(this.props.attributes.mainEvent)
 		setAttributes( { displayMainEvent: ! displayMainEvent } )
 	}
 
@@ -75,9 +69,7 @@ class LatestPostsBlock extends Component {
 		const { attributes, categoriesList, setAttributes, latestPosts } = this.props;
 
 		const {
-			align,
 			categories,
-			columns,
 			displayMainEvent,
 			displayPostExcerpt,
 			displayPostImage,
@@ -85,7 +77,6 @@ class LatestPostsBlock extends Component {
 			mainEvent,
 			order,
 			orderBy,
-			postLayout,
 			postsToShow,
 		} = attributes;
 
@@ -123,9 +114,9 @@ class LatestPostsBlock extends Component {
 					}
 
 				</PanelBody>
-				<PanelBody title={ __( 'Display Settings' ) }>
+				<PanelBody title={ __( 'Event list Settings' ) }>
 					<QueryControls
-						{ ...{ order, orderBy } }
+						{ ...{ order, orderBy, maxItems: MAX_EVENTS } }
 						numberOfItems={ postsToShow }
 						categoriesList={ categoriesList }
 						selectedCategoryId={ categories }
@@ -134,15 +125,6 @@ class LatestPostsBlock extends Component {
 						onCategoryChange={ ( value ) => setAttributes( { categories: '' !== value ? value : undefined } ) }
 						onNumberOfItemsChange={ ( value ) => setAttributes( { postsToShow: value } ) }
 					/>
-					{ postLayout === 'grid' &&
-						<RangeControl
-							label={ __( 'Columns' ) }
-							value={ columns }
-							onChange={ ( value ) => setAttributes( { columns: value } ) }
-							min={ 2 }
-							max={ ! hasPosts ? MAX_POSTS_COLUMNS : Math.min( MAX_POSTS_COLUMNS, latestPosts.length ) }
-						/>
-					}
 					<ToggleControl
 						label={ __( 'Display Featured Image' ) }
 						checked={ displayPostImage }
@@ -175,87 +157,108 @@ class LatestPostsBlock extends Component {
 			);
 		}
 
+		const eventDate = (event, month = 'MMMM', day = 'DD', full = false) => {
+			const e = event.acf
+			const date = moment(e.event_date, 'YYYYMMDD').local()
+			const type = e.event_type
+
+			// build the mutiple dates string here, as it's rather large and cumbersome
+			const multidate = (ev) => { // event object, 'e' above
+				let m = '' // first month appearing in the dates array
+				let out = '' // partial output string after the first month
+				ev.event_dates.forEach(d => {
+					let evntmonth = moment(d.event_dates_date, 'YYYYMMDD').local().format('MMMM')
+					if (m !== evntmonth) {
+						if (m === '') {
+							m = evntmonth
+						} else {
+							out += ` and ${evntmonth} `
+						}
+
+						out += ` ${moment(d.event_dates_date, 'YYYYMMDD').local().format('DD')} `
+					} else {
+						out += `, ${moment(d.event_dates_date, 'YYYYMMDD').local().format('DD')} `
+					}
+					console.log(out)
+					// So as to build something like "August 06, 08 and September 03"
+				})
+				return m + out
+			}
+
+			// parse the acf event type and provide a preformatted line such as "April 23 @ 5:00PM - May 03 @ 2:00PM"
+			return (
+				<div className="mlx-t-number">
+					<time dateTime={moment(event.date_gmt).utc().format()}>
+						{ month !== '' && <span className="month">{date.format(month)}</span> } <span>{date.format(day)}</span>
+						{ type === 'single' && full && <span> @ {e.event_time} - {e.event_time_end}</span> }
+						{ type === 'range' && full && <span> @ {e.event_time} - {moment(e.event_date_end, 'YYYYMMDD').local().format('MMMM DD')} @ {e.event_time_end}</span>}
+						{ type === 'multi' && full && multidate(e)}
+					</time>
+				</div>
+			)
+		}
+
 		// Removing posts from display should be instant.
 		const displayPosts = latestPosts.length > postsToShow ?
 			latestPosts.slice( 0, postsToShow ) :
 			latestPosts;
 
+		const hasMainEvent = (mainEvent !== undefined) && displayMainEvent
+
 		return (
 			<Fragment>
 				{ inspectorControls }
-				<BlockControls>
-					<BlockAlignmentToolbar
-						value={ align }
-						onChange={ ( value ) => {
-							setAttributes( { align: value } );
-						} }
-						controls={ [ 'center', 'wide' ] }
-					/>
-				</BlockControls>
 				<div className={ classnames( this.props.className, 'mlx-events', ) } >
-					<div
-						className={ classnames( {
-							'is-grid': postLayout === 'grid',
-							'is-list': postLayout === 'list',
-							[ `columns-${ columns }` ]: postLayout === 'grid',
-							'mlx-events__items': 'mlx-events__items',
-						} ) }
-					>
-						<h2 className="section-title t-up">{ __('Events') }</h2>
-						{((mainEvent !== undefined) && displayMainEvent) &&
-							<div className="mlx-main-event"
-								hasImage={mainEvent.image !== null ? true : false}
-							>
-								{this.hasImage ? (
-									<img
-										className="mlx-main-event__image"
-										src={mainEvent.image.source_url}
-										alt={mainEvent.image.alt_text || __('(Untitled)')}
+					<h2 className="section-title t-up">{__('Events')}</h2>
+					<div className={ classnames( 'mlx-events__container', { 'has-main-event' : hasMainEvent })}>
+
+						{ hasMainEvent &&
+							<div className="mlx-main-event">
+								{ mainEvent.image.source_url &&
+									<div className="mlx-main-event__image"
+										style={{backgroundImage: `url(${mainEvent.image.source_url})`}}
+										data-title={mainEvent.image.title || __('Untitled')}
 									/>
-								) : (
-									null
-								)
 								}
 								<div className="mlx-main-event__meta">
-									<h2 className="main-event__title">{mainEvent.title || __('(Untitled)')}</h2>
+									<h2 className="mlx-main-event__title">{mainEvent.title || __('(Untitled)')}</h2>
+									<div className="mlx-main-event__date mlx-t-number">{eventDate(mainEvent, 'MMMM', 'DD')}</div>
 								</div>
 							</div>
 						}
-						{ displayPosts.map( ( post, i ) =>
-							<article
-								hasImage={ post.mlx_featured_image !== null ? true : false }
-								key={ i }
-								className={ classnames(
-									this.hasImage && displayPostImage ? 'has-thumb' : 'no-thumb'
-								) }
-							>
-								<div className="mlx-block-post-grid-text">
-									<h2 className="entry-title">
-										<a href={ post.link } target="_blank" rel="noopener noreferrer">
-											{ decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)' ) }
-										</a>
-									</h2>
 
-									<div className="mlx-block-post-grid-byline">
-										{ post.date_gmt &&
-											<time dateTime={ moment( post.date_gmt ).utc().format() } className={ 'mlx-block-post-grid-date' }>
-												{ moment( post.date_gmt ).local().format( 'MMMM DD, Y' ) }
-											</time>
-										}
+						<div className="mlx-events__items">
+							{ displayPosts.map( ( post, i ) =>
+								<article
+									hasImage={ post.mlx_featured_image !== null ? true : false }
+									key={ i }
+									className={ classnames(
+										this.hasImage && displayPostImage ? 'has-thumb' : 'no-thumb'
+									) }
+								>
+									<div className="mlx-events__day">{eventDate(post, '')}</div>
+									<div className="mlx-events__text">
+										<h2 className="entry-title">
+											<a href={ post.link } target="_blank" rel="noopener noreferrer">
+												{ decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)' ) }
+											</a>
+										</h2>
+
+										{ eventDate(post, 'MMMM', 'DD', true) }
+
+										<div className="mlx-events__excerpt">
+											{ displayPostExcerpt && post.excerpt &&
+												<div dangerouslySetInnerHTML={ { __html: post.excerpt.rendered } } />
+											}
+
+											{ displayPostLink &&
+												<p><a className="mlx-events__link mlx-events__text" href={ post.link } target="_blank" rel="bookmark noopener noreferrer">{ __( 'Continue Reading', 'milieux-blocks' ) }</a></p>
+											}
+										</div>
 									</div>
-
-									<div className="mlx-block-post-grid-excerpt">
-										{ displayPostExcerpt && post.excerpt &&
-											<div dangerouslySetInnerHTML={ { __html: post.excerpt.rendered } } />
-										}
-
-										{ displayPostLink &&
-											<p><a className="mlx-block-post-grid-link mlx-text-link" href={ post.link } target="_blank" rel="bookmark noopener noreferrer">{ __( 'Continue Reading', 'milieux-blocks' ) }</a></p>
-										}
-									</div>
-								</div>
-							</article>
-						) }
+								</article>
+							) }
+						</div>
 					</div>
 				</div>
 			</Fragment>
@@ -264,7 +267,6 @@ class LatestPostsBlock extends Component {
 }
 
 export default withSelect( ( select, props ) => {
-	console.log(props.attributes)
 	const { postsToShow, order, orderBy, categories } = props.attributes;
 	const { getEntityRecords } = select( 'core' );
 	const latestPostsQuery = pickBy( {

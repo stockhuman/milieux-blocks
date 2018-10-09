@@ -50,10 +50,6 @@ registerBlockType( 'milieux-blocks/events', {
 			type: 'boolean',
 			default: false,
 		},
-		displayPostDate: {
-			type: 'boolean',
-			default: false,
-		},
 		displayPostExcerpt: {
 			type: 'boolean',
 			default: false,
