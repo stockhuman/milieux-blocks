@@ -101,4 +101,4 @@ add_action( 'plugins_loaded', 'milieux_blocks_loader' );
 function milieux_blocks_init() {
 	load_plugin_textdomain( 'milieux-blocks', false, basename( dirname( __FILE__ ) ) . '/languages' );
 }
-//add_action( 'init', 'milieux_blocks_init' ); // no lang defined so far
+add_action( 'init', 'milieux_blocks_init' ); // no lang defined so far
