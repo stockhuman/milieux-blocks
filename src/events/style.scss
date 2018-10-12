@@ -8,8 +8,10 @@
 	@at-root #{&}__container {
 
 		&.has-main-event {
-			display: grid;
-			grid-template-columns: 60% 40%;
+			@include media('>tablet') {
+				display: grid;
+				grid-template-columns: 40% 60%;
+			}
 		}
 
 		.entry-title {

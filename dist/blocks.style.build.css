@@ -339,9 +339,10 @@
 
 .mlx-events {
   padding: 0; }
-  .mlx-events__container.has-main-event {
-    display: grid;
-    grid-template-columns: 60% 40%; }
+  @media (min-width: 769px) {
+    .mlx-events__container.has-main-event {
+      display: grid;
+      grid-template-columns: 40% 60%; } }
   .mlx-events__container .entry-title {
     line-height: 1.2;
     font-size: 16px;

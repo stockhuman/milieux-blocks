@@ -286,9 +286,10 @@
 [data-type="milieux-blocks/events"] {
   max-width: 100% !important; }
 
-.mlx-events__container.has-main-event {
-  display: grid;
-  grid-template-columns: 40% 60%; }
+@media (min-width: 769px) {
+  .mlx-events__container.has-main-event {
+    display: grid;
+    grid-template-columns: 40% 60%; } }
 
 .mlx-events__container .entry-title {
   line-height: 1.2;
