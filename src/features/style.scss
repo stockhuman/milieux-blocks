@@ -79,6 +79,7 @@ $mlx-features__total-columns: 4;
 		@for $i from 0 through $mlx-features__total-columns {
 			&.columns-#{$i} {
 				grid-template-columns: repeat(#{$i}, 1fr);
+				grid-row-gap: u(2);
 				@include media('<1000px') { & {
 					display: block;
 				}}
@@ -103,9 +104,20 @@ $mlx-features__total-columns: 4;
 	@at-root #{&}__image {
 		overflow: hidden;
 		background: $gray-darker;
-		margin: u();
+		margin: u(5) 0 u(1.5) 0;
+
+		@include media('>tablet') { & {
+			margin: u();
+		}}
+
+		a { // contains the image
+			height: 100%;
+		}
+
 		img {
 			transform: scale(1.05);
+			object-fit: cover;
+			height: 100%;
 			transition:
 				opacity .3s cubic-bezier(.215,.61,.355,1),
 				transform .5s cubic-bezier(.215,.61,.355,1);
@@ -130,6 +142,9 @@ $mlx-features__total-columns: 4;
 
 	@at-root #{&}__title {
 		line-height: 20px;
+		font-family: $font-sans-serif;
+		font-weight: $font-w-medium;
+		@include font-size(20);
 		padding-top: 0 !important;
 		margin-bottom: u();
 	}
@@ -137,9 +152,6 @@ $mlx-features__total-columns: 4;
 	@at-root #{&}__title a {
 		color: $white;
 		text-decoration: none;
-		font-family: $font-mono;
-		@include font-size(20);
-
 		@include media('>tablet') { & {
 
 		}}

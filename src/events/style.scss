@@ -88,8 +88,10 @@
 		height: 100%;
 		display: flex;
 		top: 0;
+		padding-top: 0;
 		a {
 			text-decoration: none;
+			align-self: center;
 		}
 	}
 
@@ -97,7 +99,7 @@
 		color: $white;
 		font-family: $font-sans-serif-bold;
 		text-transform: uppercase;
-		align-self: center;
+
 	}
 
 	@at-root #{&}__date {
