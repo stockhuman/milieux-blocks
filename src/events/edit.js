@@ -61,7 +61,6 @@ class LatestPostsBlock extends Component {
 		const { displayMainEvent } = this.props.attributes
 		const { setAttributes } = this.props
 
-		console.log(this.props.attributes.mainEvent)
 		setAttributes( { displayMainEvent: ! displayMainEvent } )
 	}
 
@@ -253,7 +252,7 @@ class LatestPostsBlock extends Component {
 											}
 
 											{ displayPostLink &&
-												<p><a className="mlx-events__link mlx-events__text" href={ post.link } target="_blank" rel="bookmark noopener noreferrer">{ __( 'Continue Reading', 'milieux-blocks' ) }</a></p>
+												<p><a className="mlx-events__link mlx-events__text" href={ post.link } target="_blank" rel="bookmark noopener noreferrer">{ __( 'Continue Reading' ) }</a></p>
 											}
 										</div>
 									</div>

@@ -1,0 +1,76 @@
+@import '../common.scss';
+
+.wp-block-milieux-blocks-post {
+	max-width: 1400px;
+	margin: 0 auto u(3) auto;
+
+	.page-type-title {
+		text-transform: uppercase;
+		opacity: 0.5;
+		padding: u(4) 0 u(2) u(2);
+	}
+}
+
+// main
+.mlx-post {
+	padding: 0;
+
+	@at-root #{&}__container {
+		display: flex;
+		flex-wrap: wrap;
+		padding: u(2);
+
+		// the cover image, if any
+		img {
+			max-width: 400px;
+			@include media('>tablet') {
+				margin-right: u(3);
+			}
+		}
+	}
+
+	@at-root #{&}__meta {
+		max-width: 400px;
+
+		p {
+			font-size: 12px;
+			font-weight: 300;
+			line-height: 15px;
+		}
+
+		a {
+			display: block;
+			margin-top: u();
+			text-decoration: none;
+			color: black;
+		}
+	}
+
+	@at-root #{&}__cta {
+		max-width: 200px;
+		padding-left: u(3);
+		display: flex;
+		svg {
+			align-self: center;
+			padding: u();
+			max-width: 150px;
+		}
+	}
+
+
+	@at-root #{&}__title {
+		padding-top: 4px !important;
+		line-height: 26px;
+		display: inline;
+		@include font-size(24);
+		border-bottom: 1px solid rgba($color-brand, 0.5);
+		box-shadow: inset 0 -10px 0 rgba($color-brand, 0.5);
+		color: inherit;
+
+		transition: background 0.1s cubic-bezier(.33,.66,.66,1);
+
+		&:hover {
+			background: $white;
+		}
+	}
+}

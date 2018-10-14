@@ -195,7 +195,7 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 
 	// Output the post markup
 	$block_content = sprintf(
-		'<div class="%1$s">%2$s<div class="%3$s"><h3 class="page-type-title">Events</h3>%4$s</div></div>',
+		'<div class="%1$s">%2$s<div class="%3$s"><h3 class="page-type-title">Events</h3>%4$s</div></div></div>',
 		esc_attr( $class ),
 		$main_event_markup,
 		esc_attr( $grid_class ),

@@ -35,38 +35,6 @@
 
 .t-up {
   text-transform: uppercase; }
-
-/**
- * #.# Editor Styles
- *
- * CSS for just Backend enqueued after style.scss
- * which makes it higher in priority.
- */
-.wp-block-mlx-block-hero {
-  height: 40vh;
-  min-height: 400px;
-  font-family: "Source Sans Pro", sans-serif;
-  position: relative;
-  overflow: hidden; }
-  .wp-block-mlx-block-hero .mlx-title__container {
-    position: absolute;
-    bottom: 2em;
-    left: 2em;
-    display: -ms-flexbox;
-    display: flex; }
-    .wp-block-mlx-block-hero .mlx-title__container h2 {
-      padding-right: 1em; }
-    .wp-block-mlx-block-hero .mlx-title__container svg {
-      width: 50px; }
-  .wp-block-mlx-block-hero .overlay {
-    height: 40vh;
-    min-height: 400px;
-    position: absolute;
-    width: 100%;
-    border-radius: 3px; }
-
-[data-type="mlx/block-hero"] {
-  max-width: 100% !important; }
 @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
@@ -352,43 +320,3 @@
 .mlx-t-number {
   font-family: "Roboto", sans-serif;
   font-weight: 100; }
-@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
-/*  _            _           _                           _ _
-   (_)          | |         | |                         | (_)
-    _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
-   | | '_ \ / __| | | | |/ _` |/ _ \ | '_ ` _ \ / _ \/ _` | |/ _` |
-   | | | | | (__| | |_| | (_| |  __/ | | | | | |  __/ (_| | | (_| |
-   |_|_| |_|\___|_|\__,_|\__,_|\___| |_| |_| |_|\___|\__,_|_|\__,_|
-
-     Simple, elegant and maintainable media queries in Sass
-                       v1.4.9
-
-               http://include-media.com
-
-        Authors: Eduardo Boucas (@eduardoboucas)
-                 Hugo Giraudel (@hugogiraudel)
-
-  This project is licensed under the terms of the MIT license
-
-*/
-/**
- * Returns a specified z-index
- * @param  {[type]} $index [description]
- * @param  {[type]} $mod:  null          [description]
- * @return {int}        [description]
- */
-/**
- * The unit function
- * @param  {int} $multiplier: 1  int or string with math
- * @return {CSS unit}            $u global, multiplied by argument
- */
-.section-title {
-  font-weight: 900;
-  font-family: "Roboto", sans-serif;
-  opacity: 0.6; }
-
-.t-up {
-  text-transform: uppercase; }
-
-.editor-url-input__suggestion {
-  padding-bottom: 4px; }

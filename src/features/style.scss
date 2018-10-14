@@ -6,15 +6,15 @@ $mlx-features__total-columns: 4;
 .mlx-block-features {
 	background: $gray-darker;
 
-			// ovveride to a style provided by the milieux theme
-		.page-type-title {
-			color: rgba($white, 0.22);
-			max-width: 1400px;
-			margin: u() auto;
-			text-transform: uppercase;
-			letter-spacing: 0.01px;
-			padding: u(3);
-		}
+		// ovveride to a style provided by the milieux theme
+	.page-type-title {
+		color: rgba($white, 0.22);
+		max-width: 1400px;
+		margin: u() auto;
+		text-transform: uppercase;
+		letter-spacing: 0.01px;
+		padding: u(3);
+	}
 
 	// The featured post
 	.featured {
@@ -96,8 +96,6 @@ $mlx-features__total-columns: 4;
 			@include media('>desktop') { & {
 
 			}}
-
-
 		}
 	}
 
