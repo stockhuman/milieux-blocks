@@ -158,8 +158,8 @@ class PostSelector extends Component {
 			path: `/wp/v2/${post.subtype}s/${post.id}`,
 		}).then(response => {
 			const author = {
-				byline: response.bylines,
-				postAuthor: response.author,
+				id : response.bylines[ 0 ] || -1,
+				value: response.author[ 0 ] || '#',
 			}
 			const fullpost = {
 				id: response.id,
