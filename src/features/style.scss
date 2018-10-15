@@ -21,25 +21,6 @@ $mlx-features__total-columns: 4;
 		margin-top: u(2);
 		margin-bottom: u(4);
 
-
-		@at-root #{&}__inner {
-			display: grid;
-			grid-template-columns: 40% 1fr;
-			grid-gap: u(2);
-
-			a {
-				text-decoration: none;
-				max-width: 740px;
-			}
-
-			h2 {
-				color: $white;
-				text-transform: uppercase;
-				padding: 0 u(2) 0 0;
-			}
-		}
-
-
 		.featured__image-container {
 			position: relative;
 			height: 0;
@@ -56,6 +37,71 @@ $mlx-features__total-columns: 4;
 				display: block;
 			}
 		}
+
+		@at-root #{&}__inner {
+			grid-template-columns: 40% 1fr;
+			grid-gap: u(2);
+			color: $white;
+
+			a {
+				text-decoration: none;
+				max-width: 740px;
+			}
+
+			h2 {
+				color: $white;
+				text-transform: uppercase;
+				padding: 0;
+				margin: 0;
+				@include media('>tablet') { & {
+					font-size: 2rem;
+				}}
+				@include media('>desktop') { & {
+					font-size: 2.4rem;
+				}}
+			}
+		}
+
+		@at-root #{&}__meta {
+			padding: u();
+			display: flex;
+			flex-direction: column;
+		}
+
+		@at-root #{&}__byline {
+			font-family: $font-mono;
+			@include font-size(12);
+			color: $gray;
+			margin-top: u(0.7); // visual alignment with font
+		}
+
+		@at-root #{&}__excerpt {
+			color: $gray;
+			padding-top: u();
+			margin-bottom: u();
+		}
+
+		@at-root #{&}__readmore {
+			color: $white;
+			margin-top: auto;
+			@include font-size(30);
+
+			a {
+				padding: 4px;
+				color: inherit;
+				border-bottom: 1px solid rgba($color-brand, 0.5);
+				box-shadow: inset 0 -10px 0 rgba($color-brand, 0.5);
+				&:hover {
+					box-shadow: inset 0 -38px 0 rgba($color-brand, 0.5);
+				}
+			}
+		}
+
+		@include media('>tablet') { & {
+			@at-root #{&}__inner {
+				display: grid;
+			}
+		}}
 	}
 
 
@@ -161,10 +207,15 @@ $mlx-features__total-columns: 4;
 
 	@at-root #{&}__byline {
 		opacity: .7;
-	  transition: opacity .2s ease;
+		transition: opacity .2s ease;
+		@include font-size(12);
 	  &:hover {
 		  opacity: 1;
-    }
+		}
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
 
 		@include media('>tablet') { & {
 
@@ -177,13 +228,6 @@ $mlx-features__total-columns: 4;
 
 	@at-root #{&}__excerpt {
 		color: $gray;
-		@include media('>tablet') { & {
-
-		}}
-
-		@include media('>desktop') { & {
-
-		}}
 	}
 
 	@at-root #{&}__link {
@@ -208,12 +252,5 @@ $mlx-features__total-columns: 4;
 		display: block;
 		font-size: 10px;
 		padding-bottom: u(2);
-		@include media('>tablet') { & {
-
-		}}
-
-		@include media('>desktop') { & {
-
-		}}
 	}
 }

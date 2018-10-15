@@ -35,11 +35,18 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 	$list_items_markup = '';
 
 	$featuredPost = $attributes['featuredPost']; // Array
+	// echo '<pre>'.print_r($featuredPost).'</pre>'; // screw up the output to debug
 
 	// Check if a featured Post is set and toggled
 	if ($attributes['displayFeaturedPost'] == true && is_array($featuredPost)) {
 		$fp_ID = $featuredPost['id'];
 		$fp_img = $featuredPost['image'];
+
+		if (is_array($featuredPost['author'])) {
+			$fp_author = $featuredPost['author']['name'];
+		} else {
+			$fp_author = 'Milieux';
+		}
 
 		$featured_post_markup .= sprintf(
 			'<div class="mlx-block-features featured"><div class="featured__inner">'
@@ -66,10 +73,23 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 		);
 
 		$featured_post_markup .= sprintf(
-			'data-sizes="auto" alt="%1$s"></div><a href="%2$s"><h2>%3$s</h2></a></div></div>', // close featured div
+			'data-sizes="auto" alt="%1$s"></div><div class="featured__meta"><a href="%2$s"><h2>%3$s</h2></a>',
 			$fp_img['alt_text'],
 			esc_html($featuredPost['url']),
 			esc_html($featuredPost['title'])
+		);
+
+		// article meta
+		$featured_post_markup .= sprintf(
+			'<p class="featured__byline">by %1$s</p><p class="featured__excerpt">%2$s</p>',
+			esc_html($fp_author),
+			esc_html(wp_strip_all_tags($featuredPost['excerpt']))
+		);
+
+		// Read more link
+		$featured_post_markup .= sprintf(
+			'<p class="featured__readmore"><a href="%1$s">Read This</a></p></div></div></div>', // close featured div
+			esc_html($featuredPost['url'])
 		);
 	}
 
@@ -137,7 +157,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 					// Get the post author
 					if ( isset( $attributes['displayPostAuthor'] ) && $attributes['displayPostAuthor'] ) {
 						$list_items_markup .= sprintf(
-							'<div class="mlx-block-features__author"><a class="ab-text-link" href="%2$s">%1$s</a></div>',
+							'<div class="mlx-block-features__author"><a class="ab-text-link" href="%2$s">by %1$s</a></div>',
 							esc_html( get_the_author_meta( 'display_name', $post->post_author ) ),
 							esc_html( get_author_posts_url( $post->post_author ) )
 						);
@@ -385,15 +405,12 @@ function milieux_blocks_get_image_src_square( $object, $field_name, $request ) {
  * Get author info for the rest field
  */
 function milieux_blocks_get_author_info( $object, $field_name, $request ) {
-	$post_author = (int) $object['author'];
+	// $post_author = (int) $object['author'];
 
-	$array_data = array();
-	$array_data['link'] = get_the_author($object['id']);
-	$array_data['user_nicename'] = get_the_author_meta('user_nicename');
-	$array_data['nickname'] = get_user_meta($post_author, 'nickname', true);
-	$array_data['term_list'] = get_the_term_list($post_author, 'byline', '', ', ', '');
+	// $array_data = array();
+	$array = array(get_the_author($object['id']));
 
-	return array_filter($array_data);
+	return array_filter($array);
 
 	// // $array_data['login'] = get_the_author_meta('login');
 	// // $array_data['email'] = get_the_author_meta('email');
