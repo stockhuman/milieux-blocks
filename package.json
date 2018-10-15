@@ -19,6 +19,7 @@
     "classnames": "^2.2.6",
     "cross-env": "^5.0.1",
     "cross-spawn": "^5.1.0",
+    "date-fns": "^1.29.0",
     "eslint": "^4.15.0",
     "eslint-config-wordpress": "^2.0.0",
     "eslint-plugin-jest": "^21.6.1",

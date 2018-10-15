@@ -1,12 +1,9 @@
-/*
- * External dependencies
- */
-
 import isUndefined from 'lodash/isUndefined';
 import pickBy from 'lodash/pickBy';
-import moment from 'moment';
+import { format as formatDate } from 'date-fns'
 import classnames from 'classnames';
 
+// note this is customised from the standard included elsewhere
 import PostSelector from './select-post.js'
 
 const { Component, Fragment } = wp.element;
@@ -44,6 +41,7 @@ class LatestPostsBlock extends Component {
 		this.toggleDisplayPostImage = this.toggleDisplayPostImage.bind( this );
 		this.toggleDisplayPostLink = this.toggleDisplayPostLink.bind( this );
 		this.toggleDisplayFeaturedPost = this.toggleDisplayFeaturedPost.bind( this );
+		this.renderPostAuthor = this.renderPostAuthor.bind( this );
 	}
 
 	toggleDisplayPostDate() {
@@ -86,6 +84,32 @@ class LatestPostsBlock extends Component {
 		const { setAttributes } = this.props
 
 		setAttributes( { displayFeaturedPost: ! displayFeaturedPost } )
+	}
+
+	renderPostAuthor (data) {
+		let formattedAuthor = data
+
+		if (data.value !== '#') {
+			// strips the HTML tag response in to just the name, ovverides the defaul WP above
+			formattedAuthor.name = data.value.replace(/(<([^>]+)>)/ig, '')
+		} else {
+			formattedAuthor.name = 'Milieux'
+		}
+
+		return formattedAuthor
+	}
+
+	getUTCDate (dateString = Date.now()) {
+		const date = new Date(dateString)
+
+		return new Date(
+			date.getUTCFullYear(),
+			date.getUTCMonth(),
+			date.getUTCDate(),
+			date.getUTCHours(),
+			date.getUTCMinutes(),
+			date.getUTCSeconds(),
+		)
 	}
 
 	render() {
@@ -131,6 +155,7 @@ class LatestPostsBlock extends Component {
 							posts={[]}
 							subtype="feature"
 							onPostSelect={post => {
+								post = { ...post, ...{ author: this.renderPostAuthor(post.author) }}
 								setAttributes({
 									featuredPost: post,
 								})
@@ -179,7 +204,7 @@ class LatestPostsBlock extends Component {
 							label={ __( 'Featured Image Style' ) }
 							options={ imageCropOptions }
 							value={ imageCrop }
-							onChange={ ( value ) => this.props.setAttributes( { imageCrop: value } ) }
+							onChange={ ( value ) => setAttributes( { imageCrop: value } ) }
 						/>
 					}
 					<ToggleControl
@@ -287,7 +312,7 @@ class LatestPostsBlock extends Component {
 								}
 								<div className="mlx-featured-feature__meta">
 									<h1 className="ff__title">{featuredPost.title || __('(Untitled)')}</h1>
-									{ featuredPost.author && <p className="ff__byline">{ `${__('by')} ${featuredPost.author.link || ''}` }</p> }
+									{ featuredPost.author && <p className="ff__byline">{`${__('by')} ${featuredPost.author.name || ''}` }</p> }
 								</div>
 							</div>
 						}
@@ -327,8 +352,8 @@ class LatestPostsBlock extends Component {
 										}
 
 										{ displayPostDate && post.date_gmt &&
-											<time dateTime={ moment( post.date_gmt ).utc().format() } className={ 'mlx-block-post-grid-date' }>
-												{ moment( post.date_gmt ).local().format( 'MMMM DD, Y' ) }
+											<time dateTime={formatDate(post.date_gmt, 'YYYY-MM-DDTHH:mm:ss').toString()} className={ 'mlx-block-post-grid-date' }>
+												{formatDate(post.date_gmt, 'MMMM D' ).toString() }
 											</time>
 										}
 									</div>
