@@ -79,6 +79,7 @@ $mlx-features__total-columns: 4;
 			color: $gray;
 			padding-top: u();
 			margin-bottom: u();
+			max-width: 700px;
 		}
 
 		@at-root #{&}__readmore {
