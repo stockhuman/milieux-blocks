@@ -16,11 +16,11 @@ const { registerBlockType } = wp.blocks
 const { InspectorControls, MediaUpload } = wp.editor
 
 const {
-	PanelBody,
-	Button,
-	ToggleControl,
 	BaseControl,
+	Button,
+	PanelBody,
 	TextControl,
+	ToggleControl,
 } = wp.components
 
 registerBlockType('milieux-blocks/post', {
@@ -77,14 +77,15 @@ registerBlockType('milieux-blocks/post', {
 	edit: props => {
 		const { attributes, setAttributes } = props
 		const {
-			thePost,
-			displayPostImage,
-			displayPostExcerpt,
-			displayCTA,
+			blockTitle,
 			ctaCopy,
 			ctaLink,
+			displayCTA,
+			displayPostExcerpt,
+			displayPostImage,
 			postImage,
-			blockTitle } = attributes
+			thePost,
+		} = attributes
 
 		const ALLOWED_MEDIA_TYPES = ['image']
 
@@ -232,14 +233,14 @@ registerBlockType('milieux-blocks/post', {
 	save: props => {
 		const { attributes, className } = props
 		const {
-			thePost,
-			displayPostImage,
-			postImage,
-			displayCTA,
+			blockTitle,
 			ctaCopy,
 			ctaLink,
-			blockTitle,
+			displayCTA,
 			displayPostExcerpt,
+			displayPostImage,
+			postImage,
+			thePost,
 		} = attributes
 
 		return (

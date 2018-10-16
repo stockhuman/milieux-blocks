@@ -16,12 +16,12 @@ const { withSelect } = wp.data;
 const { InspectorControls } = wp.editor;
 
 const {
+	BaseControl,
 	PanelBody,
 	Placeholder,
 	QueryControls,
 	Spinner,
 	ToggleControl,
-	BaseControl,
 } = wp.components;
 
 const MAX_EVENTS = 14;

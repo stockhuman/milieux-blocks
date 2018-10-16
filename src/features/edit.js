@@ -113,7 +113,7 @@ class LatestPostsBlock extends Component {
 	}
 
 	render() {
-		const { attributes, categoriesList, setAttributes, latestPosts } = this.props;
+		const { attributes, categoriesList, latestPosts, setAttributes } = this.props;
 
 		const {
 			align,

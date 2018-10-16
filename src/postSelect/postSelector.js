@@ -1,7 +1,7 @@
 const { Component, Fragment } = wp.element;
 const { decodeEntities } = wp.htmlEntities;
 const { UP, DOWN, ENTER } = wp.keycodes;
-const { Spinner, Popover, IconButton } = wp.components;
+const { IconButton, Popover, Spinner } = wp.components;
 const { withInstanceId } = wp.compose;
 const { apiFetch } = wp;
 const { addQueryArgs } = wp.url;
@@ -238,7 +238,7 @@ class PostSelector extends Component {
 
 	render() {
 		const { autoFocus = true, instanceId } = this.props;
-		const { showSuggestions, posts, selectedSuggestion, loading, input } = this.state;
+		const { input, loading, posts, selectedSuggestion, showSuggestions } = this.state;
 		/* eslint-disable jsx-a11y/no-autofocus */
 		return (
 			<Fragment>
