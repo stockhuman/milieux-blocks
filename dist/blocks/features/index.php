@@ -42,7 +42,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 		$fp_ID = $featuredPost['id'];
 		$fp_img = $featuredPost['image'];
 
-		if (is_array($featuredPost['author'])) {
+		if (is_array($featuredPost['author']) && array_key_exists('name', $featuredPost['author'])) {
 			$fp_author = $featuredPost['author']['name'];
 		} else {
 			$fp_author = 'Milieux';
