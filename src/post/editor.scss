@@ -1,0 +1,33 @@
+@import '../common.scss';
+
+// setup
+.wp-block-milieux-blocks-post {
+	@extend %mlx-block;
+
+	.page-type-title {
+		text-transform: uppercase;
+		opacity: 0.5;
+		padding: 1rem 0 2rem 2rem;
+		margin: 0;
+	}
+}
+
+
+
+.mlx-post {
+	@at-root #{&}__container {
+		padding: 0;
+		img {
+			border-radius: 4px;
+		}
+	}
+
+	@at-root #{&}__title {
+		box-shadow: none;
+	}
+
+	@at-root #{&}__cta {
+		padding-left: 0;
+		svg { display: none; }
+	}
+}
