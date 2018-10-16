@@ -12,4 +12,5 @@
 import './post/post.js'
 import './features/features.js'
 import './events/events.js'
+import './banner/banner.js'
 //import './postSelect/main.js'
