@@ -96,3 +96,8 @@
 	font-family: $font-number;
 	font-weight: 100;
 }
+
+// fixes Gutenberg regrssion introduced in 4.0
+.components-popover .editor-url-input input[type="text"], .editor-block-list__block .editor-url-input input[type="text"], .editor-url-input input[type="text"] {
+		width: 100%; // styling was set to 300px forced
+}
