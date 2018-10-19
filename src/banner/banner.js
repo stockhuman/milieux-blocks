@@ -18,7 +18,6 @@ const {
 	Button,
 	PanelBody,
 	Placeholder,
-	RichText,
 	TextControl,
 	ToggleControl,
 } = wp.components
