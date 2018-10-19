@@ -5,7 +5,7 @@
  * Description: A selection of blocks purpose-built for the milieux theme and the Gutenberg editor
  * Author: mrahmadawais, maedahbatool, Michael Hemingway
  * Author URI: https://michaelhemingway.com/
- * Version: 1.0.1
+ * Version: 1.0.6
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -102,3 +102,17 @@ function milieux_blocks_init() {
 	load_plugin_textdomain( 'milieux-blocks', false, basename( dirname( __FILE__ ) ) . '/languages' );
 }
 add_action( 'init', 'milieux_blocks_init' ); // no lang defined so far
+
+
+/**
+ * @author Yahnis Elsts
+ * @link https://github.com/YahnisElsts/plugin-update-checker Repo
+ */
+require_once plugin_dir_path( __FILE__ ) .'dist/lib/puc-4.4/plugin-update-checker.php';
+
+$updateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://github.com/stockHuman/milieux-blocks',
+	__FILE__, // Full path to the main plugin file or functions.php.
+	'milieux-blocks'
+);
+$updateChecker -> setBranch('master');

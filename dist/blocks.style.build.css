@@ -663,9 +663,10 @@
   position: relative; }
 
 .mlx-banner__title {
+  font-size: 6vw;
   position: absolute;
-  top: 1rem;
-  left: 1rem;
+  top: 2rem;
+  left: 2rem;
   color: #FFFFFF;
   text-transform: uppercase; }
 

@@ -17,8 +17,11 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 		'numberposts' => $attributes['postsToShow'],
 		'post_status' => 'publish',
 		'post_type' => 'event',
-		'order' => $attributes['order'],
-		'orderby' => $attributes['orderBy'],
+		// 'order' => $attributes['order'],
+		// 'orderby' => $attributes['orderBy'],
+		'meta_query' => array('acf' => array('key'=>'event_date')),
+		'orderby' => 'event_date',
+
 		'category' => $attributes['categories'],
 	), 'OBJECT' );
 

@@ -396,6 +396,9 @@
 .mlx-t-number {
   font-family: "Roboto", sans-serif;
   font-weight: 100; }
+
+.components-popover .editor-url-input input[type="text"], .editor-block-list__block .editor-url-input input[type="text"], .editor-url-input input[type="text"] {
+  width: 100%; }
 @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
 /*  _            _           _                           _ _
    (_)          | |         | |                         | (_)
@@ -494,7 +497,10 @@
 
 .mlx-banner__title {
   position: absolute;
-  top: 1rem;
-  left: 1rem;
+  top: 2rem;
+  left: 2rem;
   color: #FFFFFF;
   text-transform: uppercase; }
+
+.mlx-banner__container a {
+  pointer-events: none; }
