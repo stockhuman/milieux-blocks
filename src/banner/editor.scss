@@ -13,9 +13,12 @@
 .mlx-banner {
 	@at-root #{&}__title {
 		position: absolute;
-		top: u();
-		left: u();
+		top: u(2);
+		left: u(2);
 		color: $white;
 		text-transform: uppercase;
+	}
+	@at-root #{&}__container a {
+		pointer-events: none;
 	}
 }
