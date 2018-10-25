@@ -59,9 +59,9 @@ class LatestPostsBlock extends Component {
 
 	toggleDisplayMainEvent() {
 		const { displayMainEvent } = this.props.attributes
-		const { setAttributes } = this.props
+		const { setAttributes } = this.props;
 
-		setAttributes( { displayMainEvent: ! displayMainEvent } )
+		setAttributes( { displayMainEvent: ! displayMainEvent } );
 	}
 
 	render() {
