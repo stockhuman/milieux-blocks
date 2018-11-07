@@ -10,7 +10,7 @@ $mlx-features__total-columns: 4;
 	.page-type-title {
 		color: rgba($white, 0.22);
 		max-width: 1400px;
-		margin: u() auto;
+		margin: 0 auto;
 		text-transform: uppercase;
 		letter-spacing: 0.01px;
 		padding: u(3);
@@ -42,6 +42,8 @@ $mlx-features__total-columns: 4;
 			grid-template-columns: 40% 1fr;
 			grid-gap: u(2);
 			color: $white;
+			max-width: 1400px;
+			margin: 0 auto;
 
 			a {
 				text-decoration: none;

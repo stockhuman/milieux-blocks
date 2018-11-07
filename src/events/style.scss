@@ -3,9 +3,11 @@
 // main
 .mlx-events {
 	@extend %mlx-block;
-	padding: 0;
+	padding: u(4);
 
 	@at-root #{&}__container {
+		max-width: 1400px;
+		margin: 0 auto;
 
 		&.has-main-event {
 			@include media('>tablet') {
