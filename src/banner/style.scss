@@ -15,7 +15,10 @@
 
 .mlx-banner {
 	@at-root #{&}__title {
-		font-size: 50px;
+		@include media('>phone') { font-size: u(2); }
+		@include media('>tablet') { font-size: u(3); }
+		@include media('>desktop') { font-size: u(5); }
+
 		position: absolute;
 		top: u(2);
 		left: u(2);
