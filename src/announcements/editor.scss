@@ -1,0 +1,24 @@
+@import '../common.scss';
+
+[data-type="milieux-blocks/banner"] {
+	max-width: 100% !important;
+}
+
+// setup
+.wp-block-milieux-blocks-banner {
+	@extend %mlx-block;
+	padding: 0;
+}
+
+.mlx-banner {
+	@at-root #{&}__title {
+		position: absolute;
+		top: u(2);
+		left: u(2);
+		color: $white;
+		text-transform: uppercase;
+	}
+	@at-root #{&}__container a {
+		pointer-events: none;
+	}
+}

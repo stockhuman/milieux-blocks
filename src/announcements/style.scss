@@ -1,0 +1,46 @@
+@import '../common.scss';
+
+[data-type="milieux-blocks/banner"] {
+	max-width: 100% !important;
+}
+
+// setup
+.wp-block-milieux-blocks-banner {
+	@extend %mlx-block;
+	padding: 0;
+	position: relative;
+	margin: u(4) auto u(4) auto;
+	max-width: 1800px;
+}
+
+.mlx-banner {
+	@at-root #{&}__title {
+		@include media('>phone') { font-size: u(2); }
+		@include media('>tablet') { font-size: u(3); }
+
+		position: absolute;
+		top: u(2);
+		left: u(2);
+		color: $white;
+		text-transform: uppercase;
+		z-index: 3;
+		max-width: 800px;
+	}
+
+	@at-root #{&}__container {
+		background: #000;
+		max-height: 500px;
+		overflow: hidden;
+
+		img {
+			opacity: 0.7;
+			transition: opacity .3s ease-in;
+		}
+
+		&:hover {
+			img {
+				opacity: 1;
+			}
+		}
+	}
+}
