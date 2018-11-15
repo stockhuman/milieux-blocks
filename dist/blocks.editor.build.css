@@ -504,3 +504,108 @@
 
 .mlx-banner__container a {
   pointer-events: none; }
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
+/*  _            _           _                           _ _
+   (_)          | |         | |                         | (_)
+    _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
+   | | '_ \ / __| | | | |/ _` |/ _ \ | '_ ` _ \ / _ \/ _` | |/ _` |
+   | | | | | (__| | |_| | (_| |  __/ | | | | | |  __/ (_| | | (_| |
+   |_|_| |_|\___|_|\__,_|\__,_|\___| |_| |_| |_|\___|\__,_|_|\__,_|
+
+     Simple, elegant and maintainable media queries in Sass
+                       v1.4.9
+
+               http://include-media.com
+
+        Authors: Eduardo Boucas (@eduardoboucas)
+                 Hugo Giraudel (@hugogiraudel)
+
+  This project is licensed under the terms of the MIT license
+
+*/
+/**
+ * Returns a specified z-index
+ * @param  {[type]} $index [description]
+ * @param  {[type]} $mod:  null          [description]
+ * @return {int}        [description]
+ */
+/**
+ * The unit function
+ * @param  {int} $multiplier: 1  int or string with math
+ * @return {CSS unit}            $u global, multiplied by argument
+ */
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400");
+.wp-block-milieux-blocks-banner {
+  width: 100%;
+  background: #fdfdfd;
+  border-radius: 4px;
+  padding: 2rem;
+  font-family: "Source Sans Pro", sans-serif; }
+
+.section-title {
+  font-weight: 900;
+  font-family: "Roboto", sans-serif;
+  opacity: 0.6; }
+
+.t-up {
+  text-transform: uppercase; }
+
+/*  _            _           _                           _ _
+   (_)          | |         | |                         | (_)
+    _ _ __   ___| |_   _  __| | ___   _ __ ___   ___  __| |_  __ _
+   | | '_ \ / __| | | | |/ _` |/ _ \ | '_ ` _ \ / _ \/ _` | |/ _` |
+   | | | | | (__| | |_| | (_| |  __/ | | | | | |  __/ (_| | | (_| |
+   |_|_| |_|\___|_|\__,_|\__,_|\___| |_| |_| |_|\___|\__,_|_|\__,_|
+
+     Simple, elegant and maintainable media queries in Sass
+                       v1.4.9
+
+               http://include-media.com
+
+        Authors: Eduardo Boucas (@eduardoboucas)
+                 Hugo Giraudel (@hugogiraudel)
+
+  This project is licensed under the terms of the MIT license
+
+*/
+/**
+ * Returns a specified z-index
+ * @param  {[type]} $index [description]
+ * @param  {[type]} $mod:  null          [description]
+ * @return {int}        [description]
+ */
+/**
+ * The unit function
+ * @param  {int} $multiplier: 1  int or string with math
+ * @return {CSS unit}            $u global, multiplied by argument
+ */
+.wp-block-milieux-blocks-banner {
+  width: 100%;
+  background: #fdfdfd;
+  border-radius: 4px;
+  padding: 2rem;
+  font-family: "Source Sans Pro", sans-serif; }
+
+.section-title {
+  font-weight: 900;
+  font-family: "Roboto", sans-serif;
+  opacity: 0.6; }
+
+.t-up {
+  text-transform: uppercase; }
+
+[data-type="milieux-blocks/banner"] {
+  max-width: 100% !important; }
+
+.wp-block-milieux-blocks-banner {
+  padding: 0; }
+
+.mlx-banner__title {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  color: #FFFFFF;
+  text-transform: uppercase; }
+
+.mlx-banner__container a {
+  pointer-events: none; }

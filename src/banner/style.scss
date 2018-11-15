@@ -17,7 +17,6 @@
 	@at-root #{&}__title {
 		@include media('>phone') { font-size: u(2); }
 		@include media('>tablet') { font-size: u(3); }
-		@include media('>desktop') { font-size: u(5); }
 
 		position: absolute;
 		top: u(2);

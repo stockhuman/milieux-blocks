@@ -13,17 +13,12 @@
  * Renders the post grid block on server.
  */
 function milieux_blocks_render_block_core_latest_events( $attributes ) {
-	$recent_posts = wp_get_recent_posts( array(
-		'numberposts' => $attributes['postsToShow'],
-		'post_status' => 'publish',
-		'post_type' => 'event',
-		// 'order' => $attributes['order'],
-		// 'orderby' => $attributes['orderBy'],
-		'meta_query' => array('acf' => array('key'=>'event_date')),
-		'orderby' => 'event_date',
 
-		'category' => $attributes['categories'],
-	), 'OBJECT' );
+	if (function_exists('milieux_sort_events')) {
+		$recent_posts = milieux_get_events();
+	} else {
+		return;
+	}
 
 	// print_r($attributes);
 	$main_event_markup = '';
@@ -74,19 +69,19 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 		);
 
 		$main_event_markup .= sprintf(
-			'<div class="mlx-main-event__date mlx-t-number"></div>'
+			'<div class="mlx-main-event__date mlx-t-number">%1$s</div>',
+			esc_html($mainEvent['acf']['event_date'])
 		);
 
 		$main_event_markup .= sprintf( '</div></div>'); // close main event div
 	}
 
 
-
 	if (is_array($recent_posts)) {
 
 		foreach ( $recent_posts as $post ) {
 			// Get the post ID
-			$post_id = $post->ID;
+			$post_id = $post['ID'];
 
 			// Get the post thumbnail
 			$post_thumb_id = get_post_thumbnail_id( $post_id );
@@ -138,8 +133,8 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 
 				$list_items_markup .= sprintf(
 					'<time datetime="%1$s" class="mlx-events__date mlx-t-number">%2$s</time>',
-					esc_attr( get_the_date( 'c', $post_id ) ),
-					esc_html( get_the_date( '', $post_id ) )
+					esc_attr( DateTime::createFromFormat('Ymd', $post['event_date'] )->format("Y-m-d H:i:s e") ), // UTC!
+					esc_html( DateTime::createFromFormat('Ymd', $post['order'] )->format("M d") )
 				);
 
 				// Wrap the excerpt content
@@ -151,7 +146,7 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 					$excerpt = apply_filters( 'the_excerpt', get_post_field( 'post_excerpt', $post_id, 'display' ) );
 
 					if( empty( $excerpt ) ) {
-						$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post->post_content, 25 ) );
+						$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post['event_content'], 25 ) );
 					}
 
 					if ( ! $excerpt ) {
