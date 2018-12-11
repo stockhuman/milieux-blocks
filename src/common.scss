@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400');
-
 @import 'scss/media';
 @import 'scss/variables';
 @import 'scss/functions';
@@ -17,13 +15,13 @@
 }
 
 // styles
-.section-title {
+%section-title {
 	font-weight: $font-w-extra-bold;
 	font-family: $font-sans-serif-bold;
 	opacity: 0.6;
 }
 
 // utilities
-.t-up {
+%t-up {
 	text-transform: uppercase;
 }

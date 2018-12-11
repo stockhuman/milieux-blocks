@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Roboto:100,900|Source+Sans+Pro:300,400');
+
+.section-title {
+	font-weight: 900;
+	font-family: 'Source Sans Pro';
+	opacity: 0.6;
+}
+
+.t-up {
+	text-transform: uppercase;
+}

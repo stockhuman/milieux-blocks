@@ -5,7 +5,7 @@
  * Description: A selection of blocks purpose-built for the milieux theme and the Gutenberg editor
  * Author: mrahmadawais, maedahbatool, Michael Hemingway
  * Author URI: https://michaelhemingway.com/
- * Version: 1.0.11
+ * Version: 1.0.12
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -52,6 +52,12 @@ function milieux_blocks_loader() {
 			MLX_BLOCKS_URL . 'dist/blocks.style.build.css',
 			array( 'wp-blocks' ),
 			'', ''// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' )
+		);
+		// enqueue common css (fonts + typography)
+		wp_enqueue_style( 'milieux-blocks-common',
+			MLX_BLOCKS_URL . 'dist/common.style.build.css',
+			array( 'wp-blocks' ),
+			'', ''
 		);
 	}
 

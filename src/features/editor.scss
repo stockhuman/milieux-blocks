@@ -38,7 +38,7 @@
 }
 
 .ff__title {
-	@extend .section-title;
+	@extend %section-title;
 	opacity: 1;
 	line-height: 1.3;
 	font-size: 22px;
