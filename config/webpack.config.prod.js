@@ -50,7 +50,7 @@ const extractConfig = {
 				plugins: [
 					autoprefixer( {
 						browsers: [
-							'>1%',
+							'>3%',
 							'last 4 versions',
 							'Firefox ESR',
 							'not ie < 9', // React doesn't support IE8 anyway
@@ -94,7 +94,7 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						
+
 						// This is a feature of `babel-loader` for webpack (not Babel itself).
 						// It enables caching results in ./node_modules/.cache/babel-loader/
 						// directory for faster rebuilds.
