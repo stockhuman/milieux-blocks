@@ -63,7 +63,8 @@ registerBlockType( 'milieux-blocks/features', {
 			default: false,
 		},
 		categories: {
-			type: 'int',
+			type: 'string',
+			default: 'all',
 		},
 		order: {
 			type: 'string',

@@ -27,7 +27,7 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 		'post_type' => 'feature',
 		'order' => $attributes['order'],
 		'orderby' => $attributes['orderBy'],
-		'category' => $attributes['categories'],
+		// 'category' => $attributes['categories'],
 	), 'OBJECT' );
 
 	// print_r($attributes);
