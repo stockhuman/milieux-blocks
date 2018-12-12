@@ -50,14 +50,13 @@ function milieux_blocks_loader() {
 	function milieux_block_assets() {
 		wp_enqueue_style( 'milieux-blocks',
 			MLX_BLOCKS_URL . 'dist/blocks.style.build.css',
-			array( 'wp-blocks' ),
-			'', ''// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' )
+			[], '' // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' )
 		);
+
 		// enqueue common css (fonts + typography)
 		wp_enqueue_style( 'milieux-blocks-common',
 			MLX_BLOCKS_URL . 'dist/common.style.build.css',
-			array( 'wp-blocks' ),
-			'', ''
+			[], ''
 		);
 	}
 
