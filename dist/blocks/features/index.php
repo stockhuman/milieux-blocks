@@ -37,10 +37,15 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 	$featuredPost = $attributes['featuredPost']; // Array
 	// echo '<pre>'.print_r($featuredPost).'</pre>'; // screw up the output to debug
 
+	$featuredPostID = -1;
+
 	// Check if a featured Post is set and toggled
 	if ($attributes['displayFeaturedPost'] == true && is_array($featuredPost)) {
 		$fp_ID = $featuredPost['id'];
 		$fp_img = $featuredPost['image'];
+
+		// update this variable to omit this particular post from subsequent posts
+		$featuredPostID = $fp_ID;
 
 		if (is_array($featuredPost['author']) && array_key_exists('name', $featuredPost['author'])) {
 			$fp_author = $featuredPost['author']['name'];
@@ -100,6 +105,11 @@ function milieux_blocks_render_block_core_latest_posts( $attributes ) {
 		foreach ( $recent_posts as $post ) {
 			// Get the post ID
 			$post_id = $post->ID;
+
+			// skip post if it's the featured post
+			if ($post_id == $featuredPostID) {
+				continue;
+			}
 
 			// Get the post thumbnail
 			$post_thumb_id = get_post_thumbnail_id( $post_id );
