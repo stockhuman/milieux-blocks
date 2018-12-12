@@ -54,12 +54,16 @@ registerBlockType( 'milieux-blocks/events', {
 			type: 'boolean',
 			default: false,
 		},
+		displayPastPosts: {
+			type: 'boolean',
+			default: false,
+		},
 		categories: {
 			type: 'int',
 		},
 		order: {
 			type: 'string',
-			default: 'asc',
+			default: 'desc',
 		},
 	},
 

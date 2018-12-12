@@ -12,8 +12,10 @@
 	@at-root #{&}__container {
 
 		&.has-main-event {
-			@include media('>tablet') {
-				display: grid;
+			display: grid;
+			grid-template-columns: 100%;
+
+			@include media('>desktop') {
 				grid-template-columns: 40% 60%;
 			}
 		}
@@ -57,6 +59,7 @@
 
 .mlx-main-event {
 	position: relative;
+	min-height: 300px;
 
 	@at-root #{&}__image {
 		background-size: cover;

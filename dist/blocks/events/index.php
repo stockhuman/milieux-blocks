@@ -14,8 +14,8 @@
  */
 function milieux_blocks_render_block_core_latest_events( $attributes ) {
 
-	if (function_exists('milieux_sort_events')) {
-		$recent_posts = milieux_get_events();
+	if (function_exists('milieux_get_events')) {
+		$recent_posts = milieux_get_events($attributes['displayPastPosts']);
 	} else {
 		return;
 	}
@@ -97,21 +97,6 @@ function milieux_blocks_render_block_core_latest_events( $attributes ) {
 				'<article class="%1$s">',
 				esc_attr( $post_thumb_class )
 			);
-
-			// // Get the main-event image
-			// if ( isset( $attributes['displayPostImage'] ) && $attributes['displayPostImage'] && $post_thumb_id ) {
-			// 	if( $attributes['imageCrop'] === 'landscape' ) {
-			// 		$post_thumb_size = 'landscape-large';
-			// 	} else {
-			// 		$post_thumb_size = 'square-large'; // was medium
-			// 	}
-
-			// 	$list_items_markup .= sprintf(
-			// 		'<div class="mlx-block-events__image"><a href="%1$s" rel="bookmark">%2$s</a></div>',
-			// 		esc_url( get_permalink( $post_id ) ),
-			// 		wp_get_attachment_image( $post_thumb_id, $post_thumb_size )
-			// 	);
-			// }
 
 			// Wrap the text content
 			$list_items_markup .= sprintf(
@@ -237,6 +222,10 @@ function milieux_blocks_register_block_core_latest_events() {
 				'type' => 'boolean',
 				'default' => true,
 			),
+			'displayPastPosts' => array(
+				'type' => 'boolean',
+				'default' => false,
+			),
 			'postLayout' => array(
 				'type' => 'string',
 				'default' => 'grid',
@@ -275,3 +264,27 @@ function milieux_blocks_register_block_core_latest_events() {
 }
 
 add_action( 'init', 'milieux_blocks_register_block_core_latest_events' );
+
+/**
+ * Computes date string for a given event
+ * @since Milieux Blocks 1.0.12
+ *
+ * @param	 {int}    the given post id (required)
+ * @return {string} a formatted date string
+ */
+function milieux_blocks_render_event_date( $event ) {
+	if (!isset($event)) { return; }
+
+	$type = $event['event_type']; // contains a string of the event type
+	$meta = $event['event_meta']; // contains a variable multidimensional array of properties
+	$date = '';
+
+	if ($type == 'single') {
+		$date = esc_html( DateTime::createFromFormat('Ymd', $event['order'] )->format("M d") );
+	}
+
+	if ( $type == 'multi' ) {
+
+	}
+
+}
