@@ -40,7 +40,7 @@
     "react-reorder": "^3.0.0-alpha.7",
     "resolve-pkg": "^2.0.0",
     "sass-loader": "^8.0.2",
-    "shelljs": "^0.8.4",
+    "shelljs": "^0.8.5",
     "style-loader": "^1.2.1",
     "update-notifier": "^4.1.0",
     "webpack": "^4.43.0"
